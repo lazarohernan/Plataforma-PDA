@@ -1,7 +1,7 @@
 
 export const DashboardFooter = () => {
   return (
-    <footer className="h-12 px-6 border-t bg-white flex items-center justify-between text-sm text-gray-500">
+    <footer className="h-12 px-6 rounded-xl bg-white flex items-center justify-between text-sm text-gray-500 mx-5 mb-5 shadow-sm glass-card">
       <div>
         <span>Plataforma PDA • Versión 2.0.1</span>
       </div>

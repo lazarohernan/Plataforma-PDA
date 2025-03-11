@@ -26,8 +26,8 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <DashboardHeader toggleSidebar={toggleSidebar} />
         
         {/* Content */}
-        <main className="flex-1 overflow-auto p-6">
-          <div className="max-w-[1500px] mx-auto">
+        <main className="flex-1 overflow-auto px-5 pb-5">
+          <div className="bg-white p-6 rounded-xl shadow-sm h-full glass-card">
             {children}
           </div>
         </main>
