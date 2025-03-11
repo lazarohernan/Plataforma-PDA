@@ -34,7 +34,7 @@ export const PDFCompatibilityPage = () => {
             La compatibilidad media (60-80%) sugiere una alineación parcial. Podrías desempeñarte bien en estos roles, pero algunas áreas requerirían adaptación o desarrollo de nuevas habilidades.
           </Text>
           <Text style={{ fontSize: 12, lineHeight: 1.5, color: '#4A5568' }}>
-            La compatibilidad baja (&lt;60%) indica que estos roles requerirían una adaptación significativa de tu parte, lo que podría resultar en mayor estrés o menor satisfacción laboral a largo plazo.
+            La compatibilidad baja ({'<'}60%) indica que estos roles requerirían una adaptación significativa de tu parte, lo que podría resultar en mayor estrés o menor satisfacción laboral a largo plazo.
           </Text>
         </View>
       </View>
