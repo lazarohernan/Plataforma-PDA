@@ -1,15 +1,15 @@
-
 import { useState } from "react";
 import { AssessmentLayout } from "@/components/organisms/AssessmentLayout";
 import { ResultsNavigation } from "@/components/molecules/ResultsNavigation";
 import { Button } from "@/components/ui/button";
-import { Download, Share2 } from "lucide-react";
+import { Share2 } from "lucide-react";
 import { mockResults } from "@/models/results";
 import { ResultsSummary } from "@/components/results/ResultsSummary";
 import { ResultsDetailedAnalysis } from "@/components/results/ResultsDetailedAnalysis";
 import { ResultsRecommendations } from "@/components/results/ResultsRecommendations";
 import { ResultsCompatibility } from "@/components/results/ResultsCompatibility";
 import { ResultsExport } from "@/components/results/ResultsExport";
+import { GeneratePDF } from "@/components/pdf/GeneratePDF";
 
 type ResultSection = "summary" | "detailed" | "recommendations" | "compatibility" | "export";
 
@@ -17,8 +17,7 @@ const Results = () => {
   const [activeSection, setActiveSection] = useState<ResultSection>("summary");
 
   const handleExportPDF = () => {
-    // In a real application, this would trigger PDF generation
-    console.log("Exporting results to PDF...");
+    console.log("Export handler is now in GeneratePDF component");
   };
 
   const renderActiveSection = () => {
@@ -64,14 +63,11 @@ const Results = () => {
       </div>
       
       <div className="mt-8 flex flex-wrap gap-3 justify-end">
-        <Button 
-          variant="outline" 
-          className="flex items-center gap-2"
-          onClick={handleExportPDF}
-        >
-          <Download size={16} />
-          Exportar PDF
-        </Button>
+        <GeneratePDF 
+          naturalProfile={mockResults.natural}
+          adaptedProfile={mockResults.adapted}
+          derivedIndicators={mockResults.derivedIndicators}
+        />
         <Button 
           variant="outline" 
           className="flex items-center gap-2"

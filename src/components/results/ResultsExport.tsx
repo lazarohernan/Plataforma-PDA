@@ -1,9 +1,10 @@
 
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { mockResults } from "@/models/results";
+import { GeneratePDF } from "@/components/pdf/GeneratePDF";
 
 interface ResultsExportProps {
-  onExportPDF: () => void;
+  onExportPDF?: () => void;
 }
 
 export const ResultsExport = ({ onExportPDF }: ResultsExportProps) => {
@@ -14,14 +15,13 @@ export const ResultsExport = ({ onExportPDF }: ResultsExportProps) => {
         Descarga tus resultados en diferentes formatos o compártelos con otros.
       </p>
       <div className="flex flex-col gap-4 max-w-md">
-        <Button 
-          className="flex items-center gap-2"
-          onClick={onExportPDF}
-        >
-          <Download size={18} />
-          Descargar informe completo (PDF)
-        </Button>
-        <Button variant="outline" className="flex items-center gap-2">
+        <GeneratePDF 
+          naturalProfile={mockResults.natural}
+          adaptedProfile={mockResults.adapted}
+          derivedIndicators={mockResults.derivedIndicators}
+          className="w-full"
+        />
+        <Button variant="outline" className="flex items-center gap-2 w-full">
           Compartir resultados por email
         </Button>
       </div>
