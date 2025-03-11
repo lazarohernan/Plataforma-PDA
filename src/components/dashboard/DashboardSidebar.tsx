@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { 
   BarChart3, 
@@ -75,19 +76,11 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
         {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
       </button>
       
-      {/* Logo */}
+      {/* Logo - Simplified */}
       <div className={cn(
-        "flex items-center h-16 px-4 border-b border-white/10",
-        collapsed ? "justify-center" : "justify-between"
+        "flex items-center justify-center h-16 px-4 border-b border-white/10"
       )}>
-        {collapsed ? (
-          <Logo className="w-8 h-8" />
-        ) : (
-          <>
-            <Logo className="w-8 h-8" />
-            <span className="text-lg font-semibold">PDA Admin</span>
-          </>
-        )}
+        <Logo className={collapsed ? "w-8 h-8" : ""} />
       </div>
       
       {/* Navigation */}
