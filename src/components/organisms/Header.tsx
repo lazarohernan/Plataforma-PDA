@@ -18,10 +18,10 @@ export const Header = ({ minimal = false }: HeaderProps) => {
         </Link>
         
         {!minimal && (
-          <>
-            <NavigationMenu className="hidden md:flex" />
+          <div className="flex justify-between items-center w-full md:w-auto">
+            <NavigationMenu className="hidden md:flex ml-8" />
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 ml-auto">
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/login" className="flex items-center gap-2">
                   <LogIn className="h-4 w-4" />
@@ -30,7 +30,7 @@ export const Header = ({ minimal = false }: HeaderProps) => {
               </Button>
               <Button size="sm" className="bg-primary">Registrarse</Button>
             </div>
-          </>
+          </div>
         )}
         
         {minimal && (

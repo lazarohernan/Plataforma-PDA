@@ -40,7 +40,8 @@ export const AssessmentLayout = ({
     <div className="min-h-screen bg-gradient-soft">
       <Header minimal />
       
-      <div className="container mx-auto px-4 py-12">
+      {/* Added proper spacing with pt-24 (padding-top) to account for the fixed header */}
+      <div className="container mx-auto px-4 py-8 pt-24">
         <Card className="max-w-4xl mx-auto p-6 md:p-8 backdrop-blur-sm bg-white/90 shadow-sm border border-gray-100">
           <div className="mb-8">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">{title}</h1>
