@@ -28,7 +28,7 @@ export const PDFCompatibilityPage = () => {
         <View style={{ marginTop: 20 }}>
           <Text style={styles.sectionTitle}>Interpretación de Compatibilidad</Text>
           <Text style={{ fontSize: 12, lineHeight: 1.5, color: '#4A5568', marginBottom: 10 }}>
-            La compatibilidad alta (>80%) indica que tu perfil natural se alinea muy bien con los requerimientos conductuales del rol. Esto sugiere que te sentirías cómodo y podrías desempeñarte eficazmente en estas posiciones.
+            La compatibilidad alta ({'>'}80%) indica que tu perfil natural se alinea muy bien con los requerimientos conductuales del rol. Esto sugiere que te sentirías cómodo y podrías desempeñarte eficazmente en estas posiciones.
           </Text>
           <Text style={{ fontSize: 12, lineHeight: 1.5, color: '#4A5568', marginBottom: 10 }}>
             La compatibilidad media (60-80%) sugiere una alineación parcial. Podrías desempeñarte bien en estos roles, pero algunas áreas requerirían adaptación o desarrollo de nuevas habilidades.
