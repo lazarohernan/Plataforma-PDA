@@ -82,6 +82,13 @@
   }
 }
 
+/* Modificar el container de Tailwind para tener un ancho máximo de 1500px */
+@layer components {
+  .container {
+    @apply max-w-[1500px];
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
