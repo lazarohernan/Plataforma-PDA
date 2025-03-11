@@ -1,7 +1,8 @@
 
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChartPie, Users, Brain, Target, Shield } from "lucide-react";
+import { ChartPie, Users, Brain, Target, Shield, LogIn, UserPlus } from "lucide-react";
 
 const Index = () => {
   return (
@@ -15,13 +16,23 @@ const Index = () => {
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl">
             Evaluación conductual científica basada en cinco dimensiones para optimizar la selección y desarrollo de tu equipo.
           </p>
-          <div className="flex gap-4 mt-8">
+          <div className="flex flex-wrap gap-4 mt-8 justify-center">
             <Button size="lg" className="bg-primary hover:bg-primary/90">
               Comenzar Evaluación
             </Button>
             <Button size="lg" variant="outline">
               Solicitar Demo
             </Button>
+            <div className="w-full flex justify-center gap-4 mt-4">
+              <Button as={Link} to="/login" variant="ghost" className="flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                Iniciar Sesión
+              </Button>
+              <Button as={Link} to="/register" variant="ghost" className="flex items-center gap-2">
+                <UserPlus className="h-4 w-4" />
+                Registrarse
+              </Button>
+            </div>
           </div>
         </div>
       </section>
