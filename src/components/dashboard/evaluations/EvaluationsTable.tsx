@@ -155,9 +155,9 @@ export const EvaluationsTable = () => {
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div className="rounded-lg overflow-hidden border border-gray-100">
       {/* Filters */}
-      <div className="p-6 border-b">
+      <div className="p-5 border-b bg-gray-50">
         <div className="flex flex-col md:flex-row gap-4 items-end">
           <div className="w-full md:w-1/3">
             <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
@@ -304,12 +304,19 @@ export const EvaluationsTable = () => {
                 </tr>
               );
             })}
+            {filteredEvaluations.length === 0 && (
+              <tr>
+                <td colSpan={6} className="px-6 py-10 text-center text-gray-500">
+                  No se encontraron evaluaciones con los filtros seleccionados
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
       
       {/* Pagination */}
-      <div className="px-6 py-4 flex items-center justify-between border-t">
+      <div className="px-6 py-4 flex items-center justify-between border-t bg-gray-50">
         <div className="text-sm text-gray-500">
           Mostrando <span className="font-medium">1</span> a <span className="font-medium">{filteredEvaluations.length}</span> de <span className="font-medium">{evaluationsData.length}</span> resultados
         </div>
