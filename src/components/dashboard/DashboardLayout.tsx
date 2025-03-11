@@ -27,7 +27,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         
         {/* Content */}
         <main className="flex-1 overflow-auto p-5 flex flex-col">
-          <div className="bg-white rounded-xl shadow-sm flex-1 glass-card overflow-hidden flex flex-col">
+          <div className="bg-white rounded-xl flex-1 glass-card overflow-hidden flex flex-col">
             {children}
           </div>
         </main>

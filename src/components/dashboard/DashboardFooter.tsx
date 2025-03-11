@@ -3,7 +3,7 @@ import { Accessibility } from "lucide-react";
 
 export const DashboardFooter = () => {
   return (
-    <footer className="h-12 px-6 rounded-xl bg-white flex items-center justify-between text-sm text-gray-700 mx-5 mb-5 shadow-sm glass-card" role="contentinfo" aria-label="Información del pie de página">
+    <footer className="h-12 px-6 rounded-xl bg-white flex items-center justify-between text-sm text-gray-700 mx-5 mb-5 glass-card" role="contentinfo" aria-label="Información del pie de página">
       <div className="flex items-center gap-2">
         <Accessibility size={16} aria-hidden="true" />
         <span>Plataforma PDA • Versión 2.0.1</span>

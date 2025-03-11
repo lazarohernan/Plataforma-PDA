@@ -27,7 +27,7 @@ export const DashboardHeader = ({ toggleSidebar }: DashboardHeaderProps) => {
   const [notifications, setNotifications] = useState(3);
   
   return (
-    <header className="h-16 px-6 rounded-xl bg-white flex items-center justify-between shadow-sm mx-5 mt-5 mb-4 glass-card">
+    <header className="h-16 px-6 rounded-xl bg-white flex items-center justify-between mx-5 mt-5 mb-4 glass-card">
       <div className="flex-1">
         <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
