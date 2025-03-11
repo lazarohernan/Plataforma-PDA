@@ -32,12 +32,12 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
     { 
       name: "Evaluaciones", 
       icon: ClipboardList, 
-      path: "/dashboard/evaluaciones" 
+      path: "/dashboard/evaluations" 
     },
     { 
       name: "Análisis", 
       icon: BarChart3, 
-      path: "/dashboard/analisis" 
+      path: "/dashboard/analysis" 
     },
     { 
       name: "Perfiles de Puesto", 
