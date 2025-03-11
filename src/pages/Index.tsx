@@ -24,13 +24,17 @@ const Index = () => {
               Solicitar Demo
             </Button>
             <div className="w-full flex justify-center gap-4 mt-4">
-              <Button as={Link} to="/login" variant="ghost" className="flex items-center gap-2">
-                <LogIn className="h-4 w-4" />
-                Iniciar Sesión
+              <Button variant="ghost" className="flex items-center gap-2" asChild>
+                <Link to="/login">
+                  <LogIn className="h-4 w-4" />
+                  Iniciar Sesión
+                </Link>
               </Button>
-              <Button as={Link} to="/register" variant="ghost" className="flex items-center gap-2">
-                <UserPlus className="h-4 w-4" />
-                Registrarse
+              <Button variant="ghost" className="flex items-center gap-2" asChild>
+                <Link to="/register">
+                  <UserPlus className="h-4 w-4" />
+                  Registrarse
+                </Link>
               </Button>
             </div>
           </div>
