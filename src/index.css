@@ -48,7 +48,7 @@
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 border border-white/20;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-md border border-white/20;
   }
 
   .fade-in {
@@ -72,6 +72,14 @@
   .bg-gradient-blue {
     background: linear-gradient(90deg, hsla(210, 40%, 90%, 1) 0%, hsla(215, 30%, 80%, 1) 100%);
   }
+  
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-sm border border-white/50 shadow-sm;
+  }
+  
+  .dashboard-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md;
+  }
 }
 
 @keyframes fadeIn {
@@ -83,4 +91,24 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5d1e5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a9b9d3;
 }

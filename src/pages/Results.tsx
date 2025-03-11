@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AssessmentLayout } from "@/components/organisms/AssessmentLayout";
 import { ResultsNavigation } from "@/components/molecules/ResultsNavigation";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, Share2 } from "lucide-react";
 import { mockResults } from "@/models/results";
 import { ResultsSummary } from "@/components/results/ResultsSummary";
 import { ResultsDetailedAnalysis } from "@/components/results/ResultsDetailedAnalysis";
@@ -47,21 +47,23 @@ const Results = () => {
   return (
     <AssessmentLayout
       title="Resultados de tu Evaluación PDA"
-      subtitle="Visualiza e interpreta tu perfil conductual"
+      subtitle="Visualiza e interpreta tu perfil conductual con información detallada y recomendaciones personalizadas."
       currentStep={0}  // Not used in results page
       totalSteps={0}   // Not used in results page
       showNavigation={false}
     >
-      <div className="mb-8">
+      <div className="mb-8 fade-in">
         <ResultsNavigation 
           activeSection={activeSection}
           onSectionChange={setActiveSection}
         />
       </div>
       
-      {renderActiveSection()}
+      <div className="fade-in">
+        {renderActiveSection()}
+      </div>
       
-      <div className="mt-8 flex justify-end">
+      <div className="mt-8 flex flex-wrap gap-3 justify-end">
         <Button 
           variant="outline" 
           className="flex items-center gap-2"
@@ -69,6 +71,13 @@ const Results = () => {
         >
           <Download size={16} />
           Exportar PDF
+        </Button>
+        <Button 
+          variant="outline" 
+          className="flex items-center gap-2"
+        >
+          <Share2 size={16} />
+          Compartir Resultados
         </Button>
       </div>
     </AssessmentLayout>
