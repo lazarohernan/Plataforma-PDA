@@ -1,14 +1,14 @@
-
-import { Link } from "react-router-dom";
+import { Header } from "@/components/organisms/Header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChartPie, Users, Brain, Target, Shield, LogIn, UserPlus } from "lucide-react";
+import { ChartPie, Users, Brain, Target, Shield } from "lucide-react";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-soft">
+      <Header />
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-32">
+      <section className="container mx-auto px-4 pt-32 pb-32">
         <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto fade-in">
           <h1 className="text-4xl md:text-6xl font-bold text-gradient leading-tight">
             Potencia el Desarrollo de tu Talento Humano
