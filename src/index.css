@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +11,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 277 75% 43%;
+    --primary: 210 50% 40%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -22,7 +23,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 277 75% 43%;
+    --ring: 210 50% 40%;
     --radius: 0.5rem;
   }
 
@@ -43,7 +44,7 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary to-blue-300 bg-clip-text text-transparent;
   }
   
   .card-hover {
@@ -64,12 +65,12 @@
     background: linear-gradient(109.6deg, rgba(223,234,247,1) 11.2%, rgba(244,248,252,1) 91.1%);
   }
   
-  .bg-gradient-purple {
-    background: linear-gradient(90deg, hsla(277, 75%, 94%, 1) 0%, hsla(297, 50%, 91%, 1) 100%);
+  .bg-gradient-blue-gray {
+    background: linear-gradient(90deg, hsla(210, 50%, 94%, 1) 0%, hsla(220, 30%, 85%, 1) 100%);
   }
   
   .bg-gradient-blue {
-    background: linear-gradient(90deg, hsla(277, 33%, 94%, 1) 0%, hsla(297, 41%, 89%, 1) 100%);
+    background: linear-gradient(90deg, hsla(210, 40%, 90%, 1) 0%, hsla(215, 30%, 80%, 1) 100%);
   }
 }
 

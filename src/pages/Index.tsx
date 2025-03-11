@@ -17,7 +17,7 @@ const Index = () => {
             Evaluación conductual científica basada en cinco dimensiones para optimizar la selección y desarrollo de tu equipo.
           </p>
           <div className="flex flex-wrap gap-4 mt-8 justify-center">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-purple-500 hover:opacity-90">
+            <Button size="lg" className="bg-gradient-to-r from-primary to-blue-400 hover:opacity-90">
               Comenzar Evaluación
             </Button>
             <Button size="lg" variant="outline" className="backdrop-blur-sm bg-white/50 border-white/20">
@@ -60,7 +60,7 @@ const Index = () => {
       </section>
 
       {/* Beneficios Section */}
-      <section className="py-20 bg-gradient-purple backdrop-blur-sm">
+      <section className="py-20 bg-gradient-blue-gray backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Beneficios para tu Empresa

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="min-h-screen bg-gradient-purple flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-blue-gray flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8 fade-in">
         <div className="text-center">
           <Link to="/" className="inline-block">
@@ -77,7 +78,7 @@ const Register = () => {
                 <Input 
                   id="password"
                   type="password"
-                  placeholder="•���••••••"
+                  placeholder="••••••••"
                   className="pl-10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -86,7 +87,7 @@ const Register = () => {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button className="w-full flex items-center gap-2 bg-gradient-to-r from-primary to-purple-500" size="lg">
+            <Button className="w-full flex items-center gap-2 bg-gradient-to-r from-primary to-blue-400" size="lg">
               <UserPlus className="h-4 w-4" />
               Crear Cuenta
             </Button>
