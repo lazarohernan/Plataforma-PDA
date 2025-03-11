@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-purple flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8 fade-in">
         <div className="text-center">
           <Link to="/" className="inline-block">
@@ -21,7 +20,7 @@ const Login = () => {
           </Link>
         </div>
 
-        <Card className="border-0 shadow-lg">
+        <Card className="border border-white/20 bg-white/80 backdrop-blur-sm">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">Iniciar Sesión</CardTitle>
             <CardDescription className="text-center">
@@ -64,7 +63,7 @@ const Login = () => {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button className="w-full flex items-center gap-2" size="lg">
+            <Button className="w-full flex items-center gap-2 bg-gradient-to-r from-primary to-purple-500" size="lg">
               <LogIn className="h-4 w-4" />
               Iniciar Sesión
             </Button>
