@@ -1,7 +1,9 @@
+
 import { Header } from "@/components/organisms/Header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChartPie, Users, Brain, Target, Shield } from "lucide-react";
+import { ChartPie, Users, Brain, Target, Shield, LogIn, UserPlus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
