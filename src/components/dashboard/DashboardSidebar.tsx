@@ -82,10 +82,10 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
         collapsed ? "justify-center" : "justify-between"
       )}>
         {collapsed ? (
-          <Logo size="sm" />
+          <Logo className="w-8 h-8" />
         ) : (
           <>
-            <Logo size="sm" />
+            <Logo className="w-8 h-8" />
             <span className="text-lg font-semibold">PDA Admin</span>
           </>
         )}
@@ -114,3 +114,4 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
     </aside>
   );
 };
+
