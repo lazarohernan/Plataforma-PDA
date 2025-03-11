@@ -11,6 +11,9 @@ import Register from "./pages/Register";
 import Assessment from "./pages/Assessment";
 import AssessmentWelcome from "./pages/AssessmentWelcome";
 import Results from "./pages/Results";
+import Dashboard from "./pages/Dashboard";
+import DashboardEvaluations from "./pages/DashboardEvaluations";
+import DashboardAnalysis from "./pages/DashboardAnalysis";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +30,12 @@ const App = () => (
           <Route path="/assessment" element={<Assessment />} />
           <Route path="/assessment/welcome" element={<AssessmentWelcome />} />
           <Route path="/results" element={<Results />} />
+          
+          {/* Dashboard Routes */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/evaluaciones" element={<DashboardEvaluations />} />
+          <Route path="/dashboard/analisis" element={<DashboardAnalysis />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
