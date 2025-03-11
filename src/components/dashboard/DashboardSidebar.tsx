@@ -64,8 +64,9 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
   return (
     <aside 
       className={cn(
-        "fixed h-full bg-[#1A365D] text-white transition-all duration-300 z-20", 
-        collapsed ? "w-20" : "w-64"
+        "fixed top-5 left-5 h-[calc(100%-40px)] bg-[#1A365D] text-white transition-all duration-300 z-20 rounded-xl shadow-lg",
+        collapsed ? "w-20" : "w-64",
+        "glass-card border border-white/10"
       )}
     >
       {/* Toggle button */}
@@ -76,7 +77,7 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
         {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
       </button>
       
-      {/* Logo - Simplified */}
+      {/* Logo */}
       <div className={cn(
         "flex items-center justify-center h-16 px-4 border-b border-white/10"
       )}>
@@ -84,7 +85,7 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
       </div>
       
       {/* Navigation */}
-      <nav className="mt-6 px-2">
+      <nav className="mt-6 px-2 h-[calc(100%-80px)] overflow-y-auto">
         <ul className="space-y-2">
           {navItems.map((item) => (
             <li key={item.path}>

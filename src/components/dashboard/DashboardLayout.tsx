@@ -21,7 +21,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <DashboardSidebar collapsed={sidebarCollapsed} toggleSidebar={toggleSidebar} />
       
       {/* Main Content */}
-      <div className={`flex flex-col flex-1 transition-all duration-300 ${sidebarCollapsed ? 'ml-20' : 'ml-64'}`}>
+      <div className={`flex flex-col flex-1 transition-all duration-300 ${sidebarCollapsed ? 'ml-24' : 'ml-72'}`}>
         {/* Header */}
         <DashboardHeader toggleSidebar={toggleSidebar} />
         
