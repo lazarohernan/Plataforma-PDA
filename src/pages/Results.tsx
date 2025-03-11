@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { AssessmentLayout } from "@/components/organisms/AssessmentLayout";
 import { ResultsNavigation } from "@/components/molecules/ResultsNavigation";
@@ -10,14 +11,15 @@ import { ResultsRecommendations } from "@/components/results/ResultsRecommendati
 import { ResultsCompatibility } from "@/components/results/ResultsCompatibility";
 import { ResultsExport } from "@/components/results/ResultsExport";
 import { GeneratePDF } from "@/components/pdf/GeneratePDF";
+import { toast } from "sonner";
 
 type ResultSection = "summary" | "detailed" | "recommendations" | "compatibility" | "export";
 
 const Results = () => {
   const [activeSection, setActiveSection] = useState<ResultSection>("summary");
 
-  const handleExportPDF = () => {
-    console.log("Export handler is now in GeneratePDF component");
+  const handleShareResults = () => {
+    toast.success("Enlace de resultados copiado al portapapeles");
   };
 
   const renderActiveSection = () => {
@@ -37,7 +39,7 @@ const Results = () => {
       case "compatibility":
         return <ResultsCompatibility />;
       case "export":
-        return <ResultsExport onExportPDF={handleExportPDF} />;
+        return <ResultsExport />;
       default:
         return null;
     }
@@ -63,18 +65,23 @@ const Results = () => {
       </div>
       
       <div className="mt-8 flex flex-wrap gap-3 justify-end">
-        <GeneratePDF 
-          naturalProfile={mockResults.natural}
-          adaptedProfile={mockResults.adapted}
-          derivedIndicators={mockResults.derivedIndicators}
-        />
-        <Button 
-          variant="outline" 
-          className="flex items-center gap-2"
-        >
-          <Share2 size={16} />
-          Compartir Resultados
-        </Button>
+        {activeSection !== "export" && (
+          <>
+            <GeneratePDF 
+              naturalProfile={mockResults.natural}
+              adaptedProfile={mockResults.adapted}
+              derivedIndicators={mockResults.derivedIndicators}
+            />
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={handleShareResults}
+            >
+              <Share2 size={16} />
+              Compartir Resultados
+            </Button>
+          </>
+        )}
       </div>
     </AssessmentLayout>
   );

@@ -11,6 +11,13 @@ interface GeneratePDFProps {
   naturalProfile: ProfileData;
   adaptedProfile: ProfileData;
   derivedIndicators: DerivedIndicatorsData;
+  selectedSections?: {
+    naturalProfile: boolean;
+    adaptedProfile: boolean;
+    derivedIndicators: boolean;
+    recommendations: boolean;
+    compatibility: boolean;
+  };
   className?: string;
 }
 
@@ -18,6 +25,13 @@ export const GeneratePDF = ({
   naturalProfile, 
   adaptedProfile, 
   derivedIndicators,
+  selectedSections = {
+    naturalProfile: true,
+    adaptedProfile: true,
+    derivedIndicators: true,
+    recommendations: true,
+    compatibility: false
+  },
   className 
 }: GeneratePDFProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -35,6 +49,7 @@ export const GeneratePDF = ({
           naturalProfile={naturalProfile} 
           adaptedProfile={adaptedProfile} 
           derivedIndicators={derivedIndicators}
+          selectedSections={selectedSections}
         />
       }
       fileName={getFileName()}
@@ -46,12 +61,12 @@ export const GeneratePDF = ({
     >
       {({ loading }) => (
         <Button 
-          variant="outline" 
-          className="flex items-center gap-2"
+          variant="default" 
+          className="flex items-center gap-2 w-full"
           disabled={loading || isGenerating}
         >
           <Download size={16} />
-          {loading || isGenerating ? 'Generando PDF...' : 'Exportar PDF'}
+          {loading || isGenerating ? 'Generando PDF...' : 'Exportar informe PDF personalizado'}
         </Button>
       )}
     </PDFDownloadLink>
