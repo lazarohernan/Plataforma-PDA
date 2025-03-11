@@ -15,14 +15,14 @@ import { DepartmentDistribution } from "@/components/dashboard/overview/Departme
 const Dashboard = () => {
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="p-6 space-y-6 h-full overflow-auto">
         <div>
           <h1 className="text-2xl font-bold">Panel de Control</h1>
           <p className="text-gray-500">Vista general de la plataforma PDA</p>
         </div>
         
         {/* Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           <DashboardMetricCard 
             title="Total Evaluaciones" 
             value="1,248" 
@@ -54,13 +54,13 @@ const Dashboard = () => {
         </div>
         
         {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <TrendsChart />
           <DistributionChart title="Distribución por Dimensión Dominante" />
         </div>
         
         {/* Bottom Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div className="lg:col-span-2">
             <DepartmentDistribution />
           </div>

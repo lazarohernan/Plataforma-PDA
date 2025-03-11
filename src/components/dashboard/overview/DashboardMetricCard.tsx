@@ -25,7 +25,7 @@ export const DashboardMetricCard = ({
   iconColor = "bg-blue-100 text-blue-600"
 }: DashboardMetricCardProps) => {
   return (
-    <div className={cn("bg-white rounded-lg shadow-sm p-6", className)}>
+    <div className={cn("bg-white rounded-lg border border-gray-100 p-5", className)}>
       <div className="flex justify-between items-start">
         <div>
           <h3 className="text-gray-500 text-sm font-medium">{title}</h3>

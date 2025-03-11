@@ -26,7 +26,7 @@ const DashboardAnalysis = () => {
   
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="p-6 space-y-5 h-full overflow-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-2xl font-bold">Análisis Comparativo</h1>
@@ -46,7 +46,7 @@ const DashboardAnalysis = () => {
         </div>
         
         {/* Profile Selection */}
-        <Card>
+        <Card className="border border-gray-100">
           <CardHeader className="pb-2">
             <h2 className="text-lg font-semibold">Seleccionar Perfiles para Comparar</h2>
             <p className="text-sm text-gray-500">
@@ -54,7 +54,7 @@ const DashboardAnalysis = () => {
             </p>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Perfil 1
@@ -93,8 +93,8 @@ const DashboardAnalysis = () => {
         </Card>
         
         {/* Comparison Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <Card className="border border-gray-100">
             <CardHeader className="pb-2">
               <h2 className="text-lg font-semibold">Perfil 1: Ana Martínez</h2>
               <p className="text-sm text-gray-500">Marketing • Evaluado el 22/08/2023</p>
@@ -107,7 +107,7 @@ const DashboardAnalysis = () => {
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border border-gray-100">
             <CardHeader className="pb-2">
               <h2 className="text-lg font-semibold">Perfil 2: Jorge Fernández</h2>
               <p className="text-sm text-gray-500">Ventas • Evaluado el 18/08/2023</p>
@@ -134,7 +134,7 @@ const DashboardAnalysis = () => {
         </div>
         
         {/* Compatibility Analysis */}
-        <Card>
+        <Card className="border border-gray-100">
           <CardHeader className="pb-2">
             <h2 className="text-lg font-semibold">Análisis de Compatibilidad</h2>
             <p className="text-sm text-gray-500">

@@ -89,7 +89,7 @@ export const RecentActivityList = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="bg-white rounded-lg border border-gray-100 p-5">
       <h2 className="text-lg font-semibold mb-4">Actividad Reciente</h2>
       
       <div className="space-y-4">

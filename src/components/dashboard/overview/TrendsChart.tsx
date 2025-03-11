@@ -24,7 +24,7 @@ const trendsData = [
 
 export const TrendsChart = () => {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 h-full">
+    <div className="bg-white rounded-lg border border-gray-100 p-5 h-full">
       <h2 className="text-lg font-semibold mb-4">Tendencias de Evaluaciones</h2>
       
       <div className="h-64">
@@ -37,7 +37,7 @@ export const TrendsChart = () => {
             <XAxis dataKey="month" tick={{ fontSize: 12 }} />
             <YAxis tick={{ fontSize: 12 }} />
             <Tooltip 
-              contentStyle={{ borderRadius: "4px", boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }} 
+              contentStyle={{ borderRadius: "4px", border: "1px solid #f0f0f0" }} 
             />
             <Legend />
             <Line 

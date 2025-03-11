@@ -32,7 +32,7 @@ export const ResultsDetailedAnalysis = () => {
   
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="bg-white rounded-lg border border-gray-100 p-6">
         <h2 className="text-2xl font-semibold mb-4">Análisis Detallado</h2>
         <p className="text-gray-600 mb-6">
           Esta sección te permite explorar en profundidad cada dimensión de tu perfil PDA,

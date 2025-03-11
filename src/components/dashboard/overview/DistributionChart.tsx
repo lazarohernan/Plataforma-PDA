@@ -19,7 +19,7 @@ export const DistributionChart = ({ title, data = profileDistribution }: Distrib
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-2 shadow-md border border-gray-100 rounded-md text-sm">
+        <div className="bg-white p-2 border border-gray-100 rounded-md text-sm">
           <p className="font-medium" style={{ color: payload[0].payload.color }}>
             {payload[0].name}: {payload[0].value}%
           </p>
@@ -30,7 +30,7 @@ export const DistributionChart = ({ title, data = profileDistribution }: Distrib
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 h-full">
+    <div className="bg-white rounded-lg border border-gray-100 p-5 h-full">
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
       
       <div className="h-64">
