@@ -8,7 +8,8 @@ import {
   Search, 
   ChevronDown,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Accessibility
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -155,7 +156,12 @@ export const EvaluationsTable = () => {
   });
 
   return (
-    <div className="rounded-lg overflow-hidden border border-gray-100">
+    <div className="rounded-lg overflow-hidden border border-gray-100" role="region" aria-label="Tabla de evaluaciones">
+      {/* Accessibility information */}
+      <div className="sr-only">
+        Esta tabla contiene información sobre las evaluaciones. Utilice las teclas de dirección para navegar entre las celdas.
+      </div>
+      
       {/* Filters */}
       <div className="p-5 border-b bg-gray-50">
         <div className="flex flex-col md:flex-row gap-4 items-end">
@@ -164,13 +170,14 @@ export const EvaluationsTable = () => {
               Búsqueda
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true" size={16} />
               <Input
                 id="search"
                 placeholder="Buscar por nombre o departamento..."
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 className="pl-10"
+                aria-label="Buscar evaluaciones"
               />
             </div>
           </div>
@@ -179,7 +186,11 @@ export const EvaluationsTable = () => {
             <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1">
               Departamento
             </label>
-            <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+            <Select 
+              value={selectedDepartment} 
+              onValueChange={setSelectedDepartment}
+              aria-label="Filtrar por departamento"
+            >
               <SelectTrigger id="department">
                 <SelectValue placeholder="Todos los departamentos" />
               </SelectTrigger>
@@ -198,7 +209,11 @@ export const EvaluationsTable = () => {
             <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
               Estado
             </label>
-            <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+            <Select 
+              value={selectedStatus} 
+              onValueChange={setSelectedStatus}
+              aria-label="Filtrar por estado"
+            >
               <SelectTrigger id="status">
                 <SelectValue placeholder="Todos los estados" />
               </SelectTrigger>
@@ -212,9 +227,14 @@ export const EvaluationsTable = () => {
           </div>
           
           <div className="w-full md:w-auto">
-            <Button variant="outline">
+            <Button 
+              variant="outline" 
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Mostrar más opciones de filtro"
+            >
               Más filtros
-              <ChevronDown size={16} className="ml-1" />
+              <ChevronDown size={16} className="ml-1" aria-hidden="true" />
             </Button>
           </div>
         </div>
@@ -222,25 +242,26 @@ export const EvaluationsTable = () => {
       
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200" role="grid" aria-label="Tabla de evaluaciones">
+          <caption className="sr-only">Evaluaciones con información de nombre, fecha, departamento, estado y dimensión dominante</caption>
           <thead className="bg-gray-50">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                 Nombre
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                 Fecha
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                 Departamento
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                 Dimensión Dominante
               </th>
-              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
@@ -250,53 +271,77 @@ export const EvaluationsTable = () => {
               const dominantDimension = getDominantDimension(evaluation.dimensions);
               
               return (
-                <tr key={evaluation.id} className="hover:bg-gray-50">
+                <tr key={evaluation.id} className="hover:bg-gray-50" tabIndex={0}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900">{evaluation.name}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                     {evaluation.date}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                     {evaluation.department}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(evaluation.status)}`}>
+                    <span 
+                      className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(evaluation.status)}`}
+                      aria-label={`Estado: ${evaluation.status}`}
+                    >
                       {evaluation.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dominantDimension.name !== "-" ? (
-                      <div className="flex items-center">
+                      <div className="flex items-center" aria-label={`Dimensión dominante: ${dominantDimension.name} ${dominantDimension.value}%`}>
                         <span className="text-sm text-gray-900 mr-2">{dominantDimension.name}</span>
-                        <div className="w-16 h-2 bg-gray-200 rounded-full">
+                        <div className="w-16 h-2 bg-gray-200 rounded-full" role="presentation">
                           <div 
                             className="h-full rounded-full bg-blue-600" 
                             style={{ width: `${dominantDimension.value}%` }}
+                            aria-hidden="true"
                           />
                         </div>
-                        <span className="text-xs text-gray-500 ml-1">{dominantDimension.value}%</span>
+                        <span className="text-xs text-gray-700 ml-1">{dominantDimension.value}%</span>
                       </div>
                     ) : (
-                      <span className="text-sm text-gray-400">-</span>
+                      <span className="text-sm text-gray-500" aria-label="Sin dimensión dominante">-</span>
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end gap-2">
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Ver detalles">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="h-8 w-8 p-0" 
+                        aria-label="Ver detalles de la evaluación de (nombre)"
+                      >
                         <Eye size={16} />
                       </Button>
                       {evaluation.status !== "Completado" && (
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Enviar recordatorio">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          aria-label="Enviar recordatorio por correo electrónico"
+                        >
                           <MailPlus size={16} />
                         </Button>
                       )}
                       {evaluation.status === "Completado" && (
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Exportar resultados">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          aria-label="Descargar resultados"
+                        >
                           <Download size={16} />
                         </Button>
                       )}
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Archivar">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="h-8 w-8 p-0" 
+                        aria-label="Archivar evaluación"
+                      >
                         <Archive size={16} />
                       </Button>
                     </div>
@@ -306,7 +351,7 @@ export const EvaluationsTable = () => {
             })}
             {filteredEvaluations.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-6 py-10 text-center text-gray-500">
+                <td colSpan={6} className="px-6 py-10 text-center text-gray-700">
                   No se encontraron evaluaciones con los filtros seleccionados
                 </td>
               </tr>
@@ -316,18 +361,30 @@ export const EvaluationsTable = () => {
       </div>
       
       {/* Pagination */}
-      <div className="px-6 py-4 flex items-center justify-between border-t bg-gray-50">
-        <div className="text-sm text-gray-500">
+      <div className="px-6 py-4 flex items-center justify-between border-t bg-gray-50" aria-label="Paginación">
+        <div className="text-sm text-gray-700">
           Mostrando <span className="font-medium">1</span> a <span className="font-medium">{filteredEvaluations.length}</span> de <span className="font-medium">{evaluationsData.length}</span> resultados
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="h-8">
-            <ChevronLeft size={16} />
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-8" 
+            aria-label="Página anterior"
+            disabled={true}
+          >
+            <ChevronLeft size={16} aria-hidden="true" />
             Anterior
           </Button>
-          <Button variant="outline" size="sm" className="h-8">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-8" 
+            aria-label="Página siguiente"
+            disabled={filteredEvaluations.length >= evaluationsData.length}
+          >
             Siguiente
-            <ChevronRight size={16} />
+            <ChevronRight size={16} aria-hidden="true" />
           </Button>
         </div>
       </div>
