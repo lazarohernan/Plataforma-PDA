@@ -73,7 +73,7 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
         onClick={toggleSidebar}
         className="absolute -right-3 top-20 bg-white text-[#1A365D] rounded-full p-1 shadow-md hover:bg-gray-100 z-30"
       >
-        {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+        {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
       </button>
       
       {/* Logo */}
@@ -104,7 +104,7 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
                   collapsed ? "justify-center" : ""
                 )}
               >
-                <item.icon size={20} />
+                <item.icon className="w-5 h-5" />
                 {!collapsed && <span>{item.name}</span>}
               </Link>
             </li>
