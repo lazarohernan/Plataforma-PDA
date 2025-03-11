@@ -16,7 +16,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   };
 
   return (
-    <div className="flex h-screen bg-[#F5F7FA]">
+    <div className="flex h-screen bg-[#F5F7FA] overflow-hidden">
       {/* Sidebar */}
       <DashboardSidebar collapsed={sidebarCollapsed} toggleSidebar={toggleSidebar} />
       
@@ -26,8 +26,8 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <DashboardHeader toggleSidebar={toggleSidebar} />
         
         {/* Content */}
-        <main className="flex-1 overflow-auto px-5 pb-5">
-          <div className="bg-white p-6 rounded-xl shadow-sm h-full glass-card">
+        <main className="flex-1 overflow-auto p-5 flex flex-col">
+          <div className="bg-white rounded-xl shadow-sm flex-1 glass-card overflow-hidden flex flex-col">
             {children}
           </div>
         </main>
