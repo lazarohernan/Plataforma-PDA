@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { 
   BarChart3, 
@@ -114,4 +113,3 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
     </aside>
   );
 };
-
