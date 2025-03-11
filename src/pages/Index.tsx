@@ -1,8 +1,7 @@
-
 import { Header } from "@/components/organisms/Header";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/card";
 import { Card } from "@/components/ui/card";
-import { ChartPie, Users, Brain, Target, Shield, LogIn, UserPlus } from "lucide-react";
+import { ChartPie, Users, Brain, Target, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -27,20 +26,6 @@ const Index = () => {
             <Button size="lg" variant="outline" className="backdrop-blur-sm bg-white/50 border-white/20">
               Solicitar Demo
             </Button>
-            <div className="w-full flex justify-center gap-4 mt-4">
-              <Button variant="ghost" className="flex items-center gap-2" asChild>
-                <Link to="/login">
-                  <LogIn className="h-4 w-4" />
-                  Iniciar Sesión
-                </Link>
-              </Button>
-              <Button variant="ghost" className="flex items-center gap-2" asChild>
-                <Link to="/register">
-                  <UserPlus className="h-4 w-4" />
-                  Registrarse
-                </Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>

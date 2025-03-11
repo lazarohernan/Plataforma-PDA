@@ -1,5 +1,4 @@
 
-import { LogIn, UserPlus } from "lucide-react";
 import { NavLink } from "@/components/atoms/NavLink";
 import { cn } from "@/lib/utils";
 
@@ -10,15 +9,17 @@ interface NavigationMenuProps {
 export const NavigationMenu = ({ className }: NavigationMenuProps) => {
   return (
     <nav className={cn("flex items-center gap-4", className)}>
-      <NavLink to="/login" icon={LogIn}>
-        Iniciar Sesión
+      <NavLink to="/about">
+        Nosotros
       </NavLink>
-      <NavLink 
-        to="/register" 
-        icon={UserPlus}
-        className="bg-gradient-to-r from-gray-700 to-gray-600 text-white px-6 py-2 rounded-md hover:opacity-90"
-      >
-        Registrarse
+      <NavLink to="/features">
+        Características
+      </NavLink>
+      <NavLink to="/pricing">
+        Precios
+      </NavLink>
+      <NavLink to="/contact">
+        Contacto
       </NavLink>
     </nav>
   );
