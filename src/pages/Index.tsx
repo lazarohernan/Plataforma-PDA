@@ -6,7 +6,7 @@ import { ChartPie, Users, Brain, Target, Shield, LogIn, UserPlus } from "lucide-
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-soft">
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-32">
         <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto fade-in">
@@ -17,10 +17,10 @@ const Index = () => {
             Evaluación conductual científica basada en cinco dimensiones para optimizar la selección y desarrollo de tu equipo.
           </p>
           <div className="flex flex-wrap gap-4 mt-8 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
+            <Button size="lg" className="bg-gradient-to-r from-primary to-blue-600 hover:opacity-90">
               Comenzar Evaluación
             </Button>
-            <Button size="lg" variant="outline">
+            <Button size="lg" variant="outline" className="backdrop-blur-sm bg-white/50 border-white/20">
               Solicitar Demo
             </Button>
             <div className="w-full flex justify-center gap-4 mt-4">
@@ -42,14 +42,14 @@ const Index = () => {
       </section>
 
       {/* Dimensiones Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-blue backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Modelo Pentadimensional
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {dimensions.map((dimension, index) => (
-              <Card key={index} className="p-6 text-center card-hover">
+              <Card key={index} className="p-6 text-center card-hover backdrop-blur-sm bg-white/70">
                 {dimension.icon}
                 <h3 className="text-xl font-semibold mt-4 mb-2">{dimension.title}</h3>
                 <p className="text-gray-600">{dimension.description}</p>
@@ -60,14 +60,14 @@ const Index = () => {
       </section>
 
       {/* Beneficios Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gradient-purple backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Beneficios para tu Empresa
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {benefits.map((benefit, index) => (
-              <div key={index} className="flex flex-col items-center text-center">
+              <div key={index} className="flex flex-col items-center text-center p-6 bg-white/50 backdrop-blur-sm rounded-lg border border-white/20">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   {benefit.icon}
                 </div>
@@ -80,14 +80,14 @@ const Index = () => {
       </section>
 
       {/* Testimonios Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-soft backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Empresas que Confían en Nosotros
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-8 card-hover">
+              <Card key={index} className="p-8 card-hover backdrop-blur-sm bg-white/70">
                 <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
                 <div className="flex items-center">
                   <div className="ml-4">

@@ -14,7 +14,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-blue flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8 fade-in">
         <div className="text-center">
           <Link to="/" className="inline-block">
@@ -23,7 +23,7 @@ const Register = () => {
           </Link>
         </div>
 
-        <Card className="border-0 shadow-lg">
+        <Card className="border border-white/20 bg-white/80 backdrop-blur-sm">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">Crear Cuenta</CardTitle>
             <CardDescription className="text-center">
@@ -87,7 +87,7 @@ const Register = () => {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button className="w-full flex items-center gap-2" size="lg">
+            <Button className="w-full flex items-center gap-2 bg-gradient-to-r from-primary to-blue-600" size="lg">
               <UserPlus className="h-4 w-4" />
               Crear Cuenta
             </Button>
