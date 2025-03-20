@@ -157,7 +157,7 @@ const Login = () => {
         </Card>
 
         <div className="text-center text-sm text-gray-500">
-          <p>© 2023 PDA International. Todos los derechos reservados.</p>
+          <p>© 2025 PDA Todos los derechos reservados - Desarrolado en Honduras</p>
         </div>
       </div>
     </div>

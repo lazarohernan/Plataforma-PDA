@@ -10,10 +10,12 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Home,
-  Briefcase
+  Briefcase,
+  ShieldCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/atoms/Logo";
+import { useAdmin } from "@/hooks/useAdmin";
 
 interface DashboardSidebarProps {
   collapsed: boolean;
@@ -22,6 +24,7 @@ interface DashboardSidebarProps {
 
 export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarProps) => {
   const location = useLocation();
+  const { isAdmin, loading } = useAdmin();
   
   const navItems = [
     { 
@@ -49,6 +52,13 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
       icon: FileBarChart2, 
       path: "/dashboard/reportes" 
     },
+    // Opción de validación solo visible para administradores
+    ...(isAdmin ? [{
+      name: "Validación de Evaluaciones",
+      icon: ShieldCheck,
+      path: "/dashboard/validacion",
+      adminOnly: true
+    }] : []),
     { 
       name: "Configuración", 
       icon: Settings, 
