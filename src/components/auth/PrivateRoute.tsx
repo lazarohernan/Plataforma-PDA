@@ -1,32 +1,38 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/hooks/useAuth';
 
 interface PrivateRouteProps {
   children: React.ReactNode;
-  redirectTo?: string;
+  requireAdmin?: boolean;
 }
 
-export const PrivateRoute = ({ children, redirectTo = '/register' }: PrivateRouteProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+export const PrivateRoute = ({ children, requireAdmin = false }: PrivateRouteProps) => {
+  const { isAuthenticated, loading, getUserProfile } = useAuth();
   const location = useLocation();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setIsAuthenticated(!!session);
-    };
-
-    checkAuth();
-  }, []);
-
-  if (isAuthenticated === null) {
-    // Mientras verificamos la autenticación, podríamos mostrar un loading
-    return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
+  // Mostrar pantalla de carga mientras verificamos la autenticación
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-indigo-100">
+        <div className="text-2xl text-gray-600 animate-pulse">Cargando...</div>
+      </div>
+    );
   }
 
+  // Si no está autenticado, redirigir al login
   if (!isAuthenticated) {
-    return <Navigate to={redirectTo} state={{ from: location }} replace />;
+    // Guardar la ubicación actual para redirigir después del login
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Si requiere rol de admin, verificar el perfil
+  if (requireAdmin) {
+    const profile = getUserProfile();
+    const isAdmin = profile?.rol?.nivel === 1;
+
+    if (!isAdmin) {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return <>{children}</>;

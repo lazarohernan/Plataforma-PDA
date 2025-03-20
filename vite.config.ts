@@ -8,6 +8,21 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    // Configuración para manejar el historial de navegación
+    historyApiFallback: {
+      disableDotRule: true,
+      rewrites: [
+        { from: /^\/[^.]+$/, to: '/index.html' }
+      ]
+    },
+    // Configuración para manejar las rutas
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
   plugins: [
     react(),
@@ -17,6 +32,16 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  // Configuración para el manejo de rutas en producción
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
     },
   },
 }));
