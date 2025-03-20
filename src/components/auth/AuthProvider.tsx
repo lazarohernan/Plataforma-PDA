@@ -1,20 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { AuthResponse, UserProfile } from '@/types/auth';
-
-interface AuthContextType {
-  session: Session | null;
-  loading: boolean;
-  error: string | null;
-  isAuthenticated: boolean;
-  signIn: (email: string, password: string) => Promise<AuthResponse>;
-  signOut: () => Promise<void>;
-  getUserProfile: () => UserProfile | null;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext } from '@/contexts/AuthContext';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
@@ -63,7 +52,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('id', data.user.id)
         .single();
 
-      if (profileError) throw profileError;
+      // Si no existe el perfil, crear uno básico
+      if (profileError) {
+        console.warn("No se encontró perfil de usuario, creando uno básico");
+        
+        // Obtener el rol de usuario por defecto
+        const { data: rolUsuario } = await supabase
+          .from('roles')
+          .select('id')
+          .eq('nivel', 4)
+          .single();
+        
+        // Crear un perfil básico
+        const defaultProfile = {
+          id: data.user.id,
+          nombres: data.user.email?.split('@')[0] || 'Usuario',
+          apellidos: '',
+          rol_id: rolUsuario?.id,
+          activo: true
+        };
+        
+        // Insertar el perfil
+        const { data: newProfile, error: insertError } = await supabase
+          .from('perfiles_usuario')
+          .insert(defaultProfile)
+          .select(`
+            *,
+            organizacion:organizaciones(*),
+            rol:roles(*)
+          `)
+          .single();
+        
+        if (insertError) {
+          console.error("Error al crear perfil:", insertError);
+          // Continuar con un perfil mínimo en memoria
+          const minimalProfile: UserProfile = {
+            ...defaultProfile,
+            rol: { id: rolUsuario?.id || '', nivel: 4, nombre: 'Usuario' },
+            organizacion: null,
+            metadata: {}
+          } as UserProfile;
+          localStorage.setItem('userProfile', JSON.stringify(minimalProfile));
+          return { data, profile: minimalProfile };
+        }
+        
+        localStorage.setItem('userProfile', JSON.stringify(newProfile));
+        return { data, profile: newProfile };
+      }
 
       // Guardar información adicional en el localStorage
       localStorage.setItem('userProfile', JSON.stringify(profile));
@@ -120,12 +155,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 };
