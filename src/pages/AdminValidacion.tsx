@@ -44,35 +44,66 @@ export default function AdminValidacion() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Primero verificar si la tabla existe
+        const { error: tableCheckError } = await supabase
+          .from('usuarios_validacion')
+          .select('id')
+          .limit(1);
+        
+        // Si hay un error, puede ser que la tabla no exista
+        if (tableCheckError) {
+          console.error('Error al verificar tabla usuarios_validacion:', tableCheckError);
+          
+          // Mostrar mensaje informativo al usuario
+          toast({
+            title: "Información",
+            description: "La tabla de validación no está configurada. Esto no afecta tu acceso como administrador.",
+            variant: "default",
+          });
+          
+          // Continuar con una lista vacía
+          setUsuarios([]);
+          setIsLoading(false);
+          return;
+        }
+        
+        // Intentar cargar los datos
         const { data: usuariosData, error } = await supabase
           .from('usuarios_validacion')
           .select('*')
           .order('fecha_creacion', { ascending: false });
 
-        if (error) throw error;
-
-        setUsuarios(usuariosData || []);
-        
-        // Contar estados
-        const completadosCount = usuariosData?.filter(u => u.estado === 'completado').length || 0;
-        const pendientesCount = usuariosData?.filter(u => u.estado === 'pendiente').length || 0;
-        
-        setCompletados(completadosCount);
-        setPendientes(pendientesCount);
+        if (error) {
+          console.error('Error al cargar usuarios:', error);
+          setUsuarios([]);
+        } else {
+          setUsuarios(usuariosData || []);
+          
+          // Contar estados
+          const completadosCount = usuariosData?.filter(u => u.estado === 'completado').length || 0;
+          const pendientesCount = usuariosData?.filter(u => u.estado === 'pendiente').length || 0;
+          
+          setCompletados(completadosCount);
+          setPendientes(pendientesCount);
+        }
       } catch (error) {
         console.error('Error al cargar usuarios:', error);
         toast({
           title: "Error",
-          description: "No se pudieron cargar los datos de usuarios.",
+          description: "No se pudieron cargar los datos de usuarios. Esto no afecta tu acceso como administrador.",
           variant: "destructive",
         });
+        setUsuarios([]);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData();
-  }, [toast]);
+    // Solo cargar datos si el usuario es administrador
+    if (!adminLoading && isAdmin) {
+      fetchData();
+    }
+  }, [toast, isAdmin, adminLoading]);
 
   // Generar código de acceso aleatorio
   const generarCodigoAcceso = async () => {
