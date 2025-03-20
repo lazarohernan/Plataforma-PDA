@@ -56,29 +56,37 @@ const Assessment = () => {
     
     // Guardar el nombre del usuario en sessionStorage para mostrarlo en la pantalla final
     const codigoAcceso = sessionStorage.getItem('codigo_acceso');
-    const usuarioValidacionId = sessionStorage.getItem('usuario_validacion_id');
+    const evaluacionId = sessionStorage.getItem('evaluacion_id');
     
-    if (codigoAcceso && usuarioValidacionId) {
+    if (codigoAcceso && evaluacionId) {
       // Intentar obtener el nombre del usuario
       try {
         const fetchUserName = async () => {
           try {
             const { data, error } = await supabase
-              .from('usuarios_validacion')
-              .select('nombre')
-              .eq('id', usuarioValidacionId)
+              .from('evaluaciones')
+              .select('metadatos')
+              .eq('id', evaluacionId)
               .single();
             
             if (error) {
-              console.error('Error al obtener nombre de usuario:', error);
+              console.error('Error al obtener datos de evaluación:', error);
               return;
             }
             
-            if (data && data.nombre && data.nombre !== 'Pendiente') {
-              sessionStorage.setItem('usuario_nombre', data.nombre);
+            if (data && data.metadatos) {
+              // Asegurarse de que metadatos es un objeto y tiene la propiedad nombre_participante
+              const metadatos = typeof data.metadatos === 'object' ? data.metadatos : {};
+              const nombreParticipante = metadatos && 'nombre_participante' in metadatos 
+                ? String(metadatos.nombre_participante) 
+                : '';
+              
+              if (nombreParticipante) {
+                sessionStorage.setItem('usuario_nombre', nombreParticipante);
+              }
             }
           } catch (error) {
-            console.error('Error al obtener nombre de usuario:', error);
+            console.error('Error al obtener datos de evaluación:', error);
           }
         };
         

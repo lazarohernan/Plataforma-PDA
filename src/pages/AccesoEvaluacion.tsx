@@ -33,14 +33,14 @@ export default function AccesoEvaluacion() {
 
     try {
       // Verificar si el código de acceso existe y está disponible
-      const { data: usuarioData, error: usuarioError } = await supabase
-        .from('usuarios_validacion')
+      const { data: evaluacionData, error: evaluacionError } = await supabase
+        .from('evaluaciones')
         .select('*')
         .eq('codigo_acceso', codigoAcceso)
         .eq('estado', 'pendiente')
         .single();
 
-      if (usuarioError || !usuarioData) {
+      if (evaluacionError || !evaluacionData) {
         toast({
           title: "Código inválido",
           description: "El código de acceso ingresado no es válido o ya ha sido utilizado.",
@@ -50,23 +50,27 @@ export default function AccesoEvaluacion() {
         return;
       }
 
-      // Actualizar los datos del usuario
+      // Actualizar el estado de la evaluación a 'en_progreso'
       const { error: updateError } = await supabase
-        .from('usuarios_validacion')
+        .from('evaluaciones')
         .update({
-          nombre,
-          email: email || null,
-          edad: edad ? parseInt(edad) : null,
-          sector_profesional: sectorProfesional || null,
+          estado: 'en_progreso',
+          metadatos: {
+            nombre_participante: nombre,
+            email_participante: email || null,
+            edad_participante: edad ? parseInt(edad) : null,
+            sector_profesional: sectorProfesional || null,
+            fecha_inicio: new Date().toISOString()
+          }
         })
-        .eq('id', usuarioData.id);
+        .eq('id', evaluacionData.id);
 
       if (updateError) {
         throw updateError;
       }
 
-      // Guardar el ID del usuario en sessionStorage para usarlo durante la evaluación
-      sessionStorage.setItem('usuario_validacion_id', usuarioData.id);
+      // Guardar el ID de la evaluación en sessionStorage para usarlo durante la evaluación
+      sessionStorage.setItem('evaluacion_id', evaluacionData.id);
       sessionStorage.setItem('codigo_acceso', codigoAcceso);
 
       // Redirigir a la página de bienvenida de la evaluación

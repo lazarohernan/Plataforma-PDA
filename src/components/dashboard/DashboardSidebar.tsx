@@ -11,11 +11,13 @@ import {
   ChevronRight, 
   Home,
   Briefcase,
-  ShieldCheck
+  ShieldCheck,
+  User
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/atoms/Logo";
 import { useAdmin } from "@/hooks/useAdmin";
+import { useAuth } from "@/hooks/useAuth";
 
 interface DashboardSidebarProps {
   collapsed: boolean;
@@ -25,6 +27,8 @@ interface DashboardSidebarProps {
 export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarProps) => {
   const location = useLocation();
   const { isAdmin, loading } = useAdmin();
+  const { getUserProfile } = useAuth();
+  const userProfile = getUserProfile();
   
   const navItems = [
     { 
@@ -92,6 +96,28 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
         "flex items-center justify-center h-16 px-4 border-b border-white/10"
       )}>
         <Logo className={collapsed ? "w-8 h-8" : ""} />
+      </div>
+      
+      {/* User Profile */}
+      <div className={cn(
+        "flex items-center px-4 py-3 border-b border-white/10",
+        collapsed ? "justify-center" : "justify-start"
+      )}>
+        <div className="flex items-center gap-3">
+          <div className="bg-white/20 rounded-full p-2">
+            <User className="w-5 h-5" />
+          </div>
+          {!collapsed && (
+            <div className="flex flex-col">
+              <span className="text-sm font-medium">
+                {userProfile?.nombres || 'Usuario'}
+              </span>
+              <span className="text-xs text-white/60">
+                {userProfile?.organizacion?.nombre || ''}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
       
       {/* Navigation */}
