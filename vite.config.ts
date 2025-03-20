@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import history from 'connect-history-api-fallback';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -9,20 +10,20 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     // Configuración para manejar el historial de navegación
-    historyApiFallback: {
-      disableDotRule: true,
-      rewrites: [
-        { from: /^\/[^.]+$/, to: '/index.html' }
-      ]
-    },
-    // Configuración para manejar las rutas
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
-    }
+    },
+    // Middleware para manejar SPA routing
+    middlewares: [
+      history({
+        disableDotRule: true,
+        htmlAcceptHeaders: ['text/html', 'application/xhtml+xml']
+      })
+    ]
   },
   plugins: [
     react(),
@@ -44,4 +45,10 @@ export default defineConfig(({ mode }) => ({
       },
     },
   },
+  // Configuración para SPA y manejo de rutas
+  preview: {
+    port: 8080,
+  },
+  // Configuración para manejar correctamente las rutas en SPA
+  base: "/",
 }));
