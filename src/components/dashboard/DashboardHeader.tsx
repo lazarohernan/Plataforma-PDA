@@ -7,7 +7,8 @@ import {
   ChevronDown,
   LogOut,
   Settings,
-  User
+  User,
+  Shield
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/useAuth";
+import { useAdmin } from "@/hooks/useAdmin";
+import { supabase } from "@/lib/supabase";
+import { useNavigate } from "react-router-dom";
 
 interface DashboardHeaderProps {
   toggleSidebar: () => void;
@@ -25,6 +30,19 @@ interface DashboardHeaderProps {
 
 export const DashboardHeader = ({ toggleSidebar }: DashboardHeaderProps) => {
   const [notifications, setNotifications] = useState(3);
+  const { getUserProfile } = useAuth();
+  const { isAdmin } = useAdmin();
+  const navigate = useNavigate();
+  
+  const userProfile = getUserProfile();
+  const userName = userProfile?.nombres && userProfile?.apellidos 
+    ? `${userProfile.nombres} ${userProfile.apellidos}`
+    : userProfile?.nombres || 'Usuario';
+  
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/login');
+  };
   
   return (
     <header className="h-16 px-6 rounded-xl bg-white flex items-center justify-between mx-5 mt-5 mb-4 glass-card">
@@ -56,8 +74,13 @@ export const DashboardHeader = ({ toggleSidebar }: DashboardHeaderProps) => {
             <Button variant="ghost" className="flex items-center gap-2">
               <UserCircle size={28} />
               <div className="text-left hidden sm:block">
-                <p className="text-sm font-medium">María González</p>
-                <p className="text-xs text-gray-500">Acme Corp</p>
+                <div className="flex items-center gap-1">
+                  <p className="text-sm font-medium">{userName}</p>
+                  {isAdmin && <Shield size={14} className="text-blue-600" />}
+                </div>
+                <p className="text-xs text-gray-500">
+                  {isAdmin ? 'Administrador' : 'Usuario'}
+                </p>
               </div>
               <ChevronDown size={16} className="text-gray-400" />
             </Button>
@@ -74,7 +97,7 @@ export const DashboardHeader = ({ toggleSidebar }: DashboardHeaderProps) => {
               <span>Configuración</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Cerrar Sesión</span>
             </DropdownMenuItem>
