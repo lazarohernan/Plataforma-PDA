@@ -110,7 +110,7 @@ export const DashboardSidebar = ({ collapsed, toggleSidebar }: DashboardSidebarP
           {!collapsed && (
             <div className="flex flex-col">
               <span className="text-sm font-medium">
-                {userProfile?.nombres || 'Usuario'}
+                {userProfile ? `${userProfile.nombres || ''} ${userProfile.apellidos || ''}`.trim() : 'Usuario'}
               </span>
               <span className="text-xs text-white/60">
                 {userProfile?.organizacion?.nombre || ''}

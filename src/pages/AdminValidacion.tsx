@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
+import { useAdmin } from '@/hooks/useAdmin';
 import { Database } from '@/types/supabase';
 
 type UsuarioValidacion = Database['public']['Tables']['usuarios_validacion']['Row'];
@@ -23,94 +24,21 @@ export default function AdminValidacion() {
   const [nuevoCodigoAcceso, setNuevoCodigoAcceso] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { isAdmin, loading: adminLoading } = useAdmin();
 
   // Verificar si el usuario es administrador
   useEffect(() => {
-    const checkUserRole = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        
-        if (!user) {
-          toast({
-            title: "Sesión no iniciada",
-            description: "Por favor inicia sesión para acceder a esta página.",
-            variant: "destructive",
-          });
-          navigate('/login');
-          return;
-        }
-
-        console.log("Usuario autenticado:", user);
-        
-        // Verificar si el usuario tiene metadatos de rol
-        if (user.user_metadata && user.user_metadata.role === 'admin') {
-          console.log("Usuario es administrador según metadatos");
-          return; // Permitir acceso si es admin según metadatos
-        }
-        
-        // Intentar obtener el rol mediante RPC
-        try {
-          const { data: userRole, error: rpcError } = await supabase.rpc('get_user_role');
-          
-          if (rpcError) {
-            console.error("Error al obtener rol mediante RPC:", rpcError);
-            
-            // Verificar si el usuario es uno de los administradores conocidos
-            const adminEmails = ['hlazaroe@gmail.com', 'dennisjoaquin@gmail.com'];
-            if (adminEmails.includes(user.email || '')) {
-              console.log("Usuario es administrador por email conocido");
-              return; // Permitir acceso si es un email de admin conocido
-            }
-            
-            toast({
-              title: "Error al verificar permisos",
-              description: `Error: ${rpcError.message}. Contacta al administrador.`,
-              variant: "destructive",
-            });
-            navigate('/');
-            return;
-          }
-          
-          console.log("Rol obtenido mediante RPC:", userRole);
-          
-          if (userRole !== 1) { // 1 = Administrador
-            toast({
-              title: "Acceso denegado",
-              description: "No tienes permisos para acceder a esta página.",
-              variant: "destructive",
-            });
-            navigate('/');
-          }
-        } catch (error) {
-          console.error("Excepción al verificar rol:", error);
-          
-          // Verificar si el usuario es uno de los administradores conocidos
-          const adminEmails = ['hlazaroe@gmail.com', 'dennisjoaquin@gmail.com'];
-          if (adminEmails.includes(user.email || '')) {
-            console.log("Usuario es administrador por email conocido");
-            return; // Permitir acceso si es un email de admin conocido
-          }
-          
-          toast({
-            title: "Error al verificar permisos",
-            description: "Ocurrió un error inesperado. Contacta al administrador.",
-            variant: "destructive",
-          });
-          navigate('/');
-        }
-      } catch (error) {
-        console.error("Error al verificar usuario:", error);
-        toast({
-          title: "Error de autenticación",
-          description: "No se pudo verificar tu identidad. Por favor, inicia sesión nuevamente.",
-          variant: "destructive",
-        });
-        navigate('/login');
-      }
-    };
-
-    checkUserRole();
-  }, [navigate, toast]);
+    if (adminLoading) return; // Esperar a que se cargue el estado de admin
+    
+    if (!isAdmin) {
+      toast({
+        title: "Acceso denegado",
+        description: "No tienes permisos para acceder a esta página.",
+        variant: "destructive",
+      });
+      navigate('/dashboard');
+    }
+  }, [isAdmin, adminLoading, navigate, toast]);
 
   // Cargar datos de usuarios de validación
   useEffect(() => {

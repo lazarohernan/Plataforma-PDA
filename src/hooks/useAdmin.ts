@@ -15,11 +15,35 @@ export const useAdmin = () => {
           return;
         }
 
-        // Obtener los metadatos del usuario que contienen el rol
+        // Verificar si el usuario tiene rol de administrador en los metadatos
         const { data: user } = await supabase.auth.getUser();
+        const isAdminByMetadata = user?.user?.user_metadata?.role === 'admin';
         
-        // Verificar si el usuario tiene rol de administrador
-        setIsAdmin(user?.user?.user_metadata?.role === 'admin');
+        if (isAdminByMetadata) {
+          setIsAdmin(true);
+          setLoading(false);
+          return;
+        }
+        
+        // Si no es admin por metadatos, verificar el nivel del rol en la base de datos
+        const { data: profile, error } = await supabase
+          .from('perfiles_usuario')
+          .select(`
+            rol:roles(nivel)
+          `)
+          .eq('id', session.user.id)
+          .single();
+        
+        if (error) {
+          console.error('Error fetching user profile:', error);
+          setIsAdmin(false);
+          return;
+        }
+        
+        // Verificar si el nivel del rol es 1 (Administrador)
+        const isAdminByRole = profile?.rol?.nivel === 1;
+        
+        setIsAdmin(isAdminByMetadata || isAdminByRole);
       } catch (error) {
         console.error('Error checking admin status:', error);
         setIsAdmin(false);
