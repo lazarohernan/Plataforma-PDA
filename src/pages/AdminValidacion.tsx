@@ -17,7 +17,7 @@ import {
   DialogClose
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Share, Copy, Mail, QrCode } from 'lucide-react';
+import { Share, Copy, Mail, MessageSquare, Send } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { useAdmin } from '@/hooks/useAdmin';
@@ -444,18 +444,46 @@ export default function AdminValidacion() {
           </div>
           
           <div className="mt-6">
-            <Tabs defaultValue="qr">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="qr">Código QR</TabsTrigger>
+            <Tabs defaultValue="email">
+              <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="email">Correo</TabsTrigger>
+                <TabsTrigger value="whatsapp">WhatsApp</TabsTrigger>
+                <TabsTrigger value="telegram">Telegram</TabsTrigger>
               </TabsList>
-              <TabsContent value="qr" className="flex justify-center py-4">
-                {/* QR Code Component */}
-                <div className="p-4 bg-white border rounded-md flex flex-col items-center">
-                  <QrCode className="h-32 w-32 text-primary" />
-                  <p className="mt-4 text-sm text-center">
-                    Código de acceso: <span className="font-mono font-bold">{codigoSeleccionado}</span>
+              <TabsContent value="whatsapp" className="py-4">
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Comparte el enlace de evaluación a través de WhatsApp.
                   </p>
+                  <Button 
+                    onClick={() => {
+                      const shareableLink = `${window.location.origin}/acceso-evaluacion?codigo=${codigoSeleccionado}`;
+                      const text = encodeURIComponent(`Hola, te invito a realizar la evaluación PDA. Accede a este enlace: ${shareableLink}\n\nCódigo de acceso: ${codigoSeleccionado}`);
+                      window.open(`https://wa.me/?text=${text}`, '_blank');
+                    }}
+                    className="w-full"
+                  >
+                    <MessageSquare className="mr-2 h-4 w-4" />
+                    Compartir por WhatsApp
+                  </Button>
+                </div>
+              </TabsContent>
+              <TabsContent value="telegram" className="py-4">
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Comparte el enlace de evaluación a través de Telegram.
+                  </p>
+                  <Button 
+                    onClick={() => {
+                      const shareableLink = `${window.location.origin}/acceso-evaluacion?codigo=${codigoSeleccionado}`;
+                      const text = encodeURIComponent(`Hola, te invito a realizar la evaluación PDA. Accede a este enlace: ${shareableLink}\n\nCódigo de acceso: ${codigoSeleccionado}`);
+                      window.open(`https://t.me/share/url?url=${shareableLink}&text=${text}`, '_blank');
+                    }}
+                    className="w-full"
+                  >
+                    <Send className="mr-2 h-4 w-4" />
+                    Compartir por Telegram
+                  </Button>
                 </div>
               </TabsContent>
               <TabsContent value="email">
