@@ -2,6 +2,7 @@
 import { Logo } from "@/components/atoms/Logo";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { LogIn, ClipboardCheck } from "lucide-react";
 
 interface HeaderProps {
   minimal?: boolean;
@@ -15,12 +16,27 @@ export const Header = ({ minimal = false }: HeaderProps) => {
           <Logo />
         </Link>
         
-        {minimal && (
+        {minimal ? (
           <Button variant="ghost" size="sm" asChild>
             <Link to="/">
               Volver al Inicio
             </Link>
           </Button>
+        ) : (
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/acceso-evaluacion" className="flex items-center gap-2">
+                <ClipboardCheck className="h-4 w-4" />
+                Evaluación
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/login" className="flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                Iniciar Sesión
+              </Link>
+            </Button>
+          </div>
         )}
       </div>
     </header>
