@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { PrivateRoute } from '@/components/auth/PrivateRoute';
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -25,23 +26,78 @@ function App() {
       <TooltipProvider>
         <Router>
           <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/acceso-evaluacion" element={<AccesoEvaluacion />} />
-          <Route path="/assessment-welcome" element={<AssessmentWelcome />} />
-          <Route path="/assessment" element={<Assessment />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/evaluations" element={<DashboardEvaluations />} />
-          <Route path="/dashboard/analysis" element={<DashboardAnalysis />} />
-          <Route path="/dashboard/perfiles-puesto" element={<PerfilesDeOPuesto />} />
-          <Route path="/dashboard/perfiles-puesto/crear" element={<PerfilPuestoCrear />} />
-          <Route path="/dashboard/perfiles-puesto/editar/:id" element={<PerfilPuestoEditar />} />
-          <Route path="/dashboard/perfiles-puesto/comparar" element={<PerfilPuestoComparar />} />
-          <Route path="/dashboard/reportes" element={<DashboardReportes />} />
-          <Route path="/dashboard/validacion" element={<AdminValidacion />} />
-          <Route path="*" element={<NotFound />} />
+            {/* Rutas públicas */}
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/acceso-evaluacion" element={<AccesoEvaluacion />} />
+            
+            {/* Rutas protegidas que requieren autenticación */}
+            <Route path="/assessment-welcome" element={
+              <PrivateRoute>
+                <AssessmentWelcome />
+              </PrivateRoute>
+            } />
+            <Route path="/assessment" element={
+              <PrivateRoute>
+                <Assessment />
+              </PrivateRoute>
+            } />
+            <Route path="/results" element={
+              <PrivateRoute>
+                <Results />
+              </PrivateRoute>
+            } />
+            
+            {/* Rutas del dashboard (protegidas) */}
+            <Route path="/dashboard" element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/evaluations" element={
+              <PrivateRoute>
+                <DashboardEvaluations />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/analysis" element={
+              <PrivateRoute>
+                <DashboardAnalysis />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/perfiles-puesto" element={
+              <PrivateRoute>
+                <PerfilesDeOPuesto />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/perfiles-puesto/crear" element={
+              <PrivateRoute>
+                <PerfilPuestoCrear />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/perfiles-puesto/editar/:id" element={
+              <PrivateRoute>
+                <PerfilPuestoEditar />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/perfiles-puesto/comparar" element={
+              <PrivateRoute>
+                <PerfilPuestoComparar />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/reportes" element={
+              <PrivateRoute>
+                <DashboardReportes />
+              </PrivateRoute>
+            } />
+            <Route path="/dashboard/validacion" element={
+              <PrivateRoute>
+                <AdminValidacion />
+              </PrivateRoute>
+            } />
+            
+            {/* Ruta 404 */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </TooltipProvider>

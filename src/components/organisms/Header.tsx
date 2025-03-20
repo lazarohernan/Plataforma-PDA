@@ -1,9 +1,7 @@
 
-import { NavigationMenu } from "@/components/molecules/NavigationMenu";
 import { Logo } from "@/components/atoms/Logo";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { LogIn } from "lucide-react";
 
 interface HeaderProps {
   minimal?: boolean;
@@ -13,25 +11,9 @@ export const Header = ({ minimal = false }: HeaderProps) => {
   return (
     <header className="w-full py-4 px-4 md:px-8 backdrop-blur-sm bg-white/80 shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
+        <Link to="/" className="flex items-center">
           <Logo />
-        </div>
-        
-        {!minimal && (
-          <div className="flex justify-between items-center w-full md:w-auto">
-            <NavigationMenu className="hidden md:flex ml-8" />
-            
-            <div className="flex items-center gap-4 ml-auto">
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/login" className="flex items-center gap-2">
-                  <LogIn className="h-4 w-4" />
-                  Iniciar Sesión
-                </Link>
-              </Button>
-              <Button size="sm" className="bg-primary">Registrarse</Button>
-            </div>
-          </div>
-        )}
+        </Link>
         
         {minimal && (
           <Button variant="ghost" size="sm" asChild>
