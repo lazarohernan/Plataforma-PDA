@@ -33,8 +33,7 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 
-# Archivos de documentación
-/docs/
+# Archivos de documentación de respaldo
 /Docsrespaldo/
 
 # Archivos de Cline
