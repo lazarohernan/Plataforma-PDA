@@ -6,6 +6,7 @@ import { PrivateRoute } from '@/components/auth/PrivateRoute';
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Assessment from './pages/Assessment';
+import AssessmentWelcome from './pages/AssessmentWelcome';
 import Results from './pages/Results';
 import NotFound from './pages/NotFound';
 import AccesoEvaluacion from './pages/AccesoEvaluacion';
@@ -28,6 +29,11 @@ function AppRoutes() {
       <Route path="/register" element={<Navigate to="/" replace />} />
       
       {/* Rutas protegidas que requieren autenticación */}
+      <Route path="/assessment-welcome" element={
+        <PrivateRoute>
+          <AssessmentWelcome />
+        </PrivateRoute>
+      } />
       <Route path="/assessment" element={
         <PrivateRoute>
           <Assessment />
