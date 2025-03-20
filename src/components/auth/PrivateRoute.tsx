@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { useAdmin } from '@/hooks/useAdmin';
 import { supabase } from '@/lib/supabase';
 
 interface PrivateRouteProps {
@@ -9,6 +10,7 @@ interface PrivateRouteProps {
 
 export const PrivateRoute = ({ children, requireAdmin = false }: PrivateRouteProps) => {
   const { isAuthenticated, loading, getUserProfile } = useAuth();
+  const { isAdmin } = useAdmin();
   const location = useLocation();
 
   // Mostrar pantalla de carga mientras verificamos la autenticación
@@ -26,19 +28,16 @@ export const PrivateRoute = ({ children, requireAdmin = false }: PrivateRoutePro
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Si requiere rol de admin, verificar el perfil y los metadatos
+  // Si requiere rol de admin, verificar si es admin
   if (requireAdmin) {
-    // Obtener el perfil del usuario
+    // Obtener el perfil del usuario para depuración
     const profile = getUserProfile();
     
-    // Verificar si el usuario tiene rol de administrador en los metadatos
-    const isAdminByMetadata = profile?.metadata?.role === 'admin';
+    console.log('PrivateRoute - isAdmin:', isAdmin);
+    console.log('PrivateRoute - profile:', profile);
     
-    // Verificar si el usuario tiene nivel de rol 1 (Administrador)
-    const isAdminByRole = profile?.rol?.nivel === 1;
-    
-    // Si no es admin por ninguna de las dos vías, redirigir
-    if (!isAdminByMetadata && !isAdminByRole) {
+    // Si no es admin, redirigir
+    if (!isAdmin) {
       return <Navigate to="/dashboard" replace />;
     }
   }
