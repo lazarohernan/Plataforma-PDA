@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Share, Copy, Mail, QrCode } from 'lucide-react';
-import QRCode from 'react-qr-code';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { useAdmin } from '@/hooks/useAdmin';
@@ -452,11 +451,11 @@ export default function AdminValidacion() {
               </TabsList>
               <TabsContent value="qr" className="flex justify-center py-4">
                 {/* QR Code Component */}
-                <div className="p-4 bg-white border rounded-md">
-                  <QRCode 
-                    value={`${window.location.origin}/acceso-evaluacion?codigo=${codigoSeleccionado}`} 
-                    size={200}
-                  />
+                <div className="p-4 bg-white border rounded-md flex flex-col items-center">
+                  <QrCode className="h-32 w-32 text-primary" />
+                  <p className="mt-4 text-sm text-center">
+                    Código de acceso: <span className="font-mono font-bold">{codigoSeleccionado}</span>
+                  </p>
                 </div>
               </TabsContent>
               <TabsContent value="email">
