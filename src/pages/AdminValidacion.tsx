@@ -7,6 +7,18 @@ import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogFooter, 
+  DialogHeader, 
+  DialogTitle,
+  DialogClose
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Share, Copy, Mail, QrCode } from 'lucide-react';
+import QRCode from 'react-qr-code';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { useAdmin } from '@/hooks/useAdmin';
@@ -22,6 +34,9 @@ export default function AdminValidacion() {
   const [isLoading, setIsLoading] = useState(true);
   const [isGeneratingCode, setIsGeneratingCode] = useState(false);
   const [nuevoCodigoAcceso, setNuevoCodigoAcceso] = useState('');
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const [codigoSeleccionado, setCodigoSeleccionado] = useState('');
+  const [emailTo, setEmailTo] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
   const { isAdmin, loading: adminLoading } = useAdmin();
@@ -221,6 +236,40 @@ export default function AdminValidacion() {
     });
   };
 
+  // Funciones para compartir
+  const copyToClipboard = () => {
+    const shareableLink = `${window.location.origin}/acceso-evaluacion?codigo=${codigoSeleccionado}`;
+    navigator.clipboard.writeText(shareableLink);
+    toast({
+      title: "Enlace copiado",
+      description: "El enlace ha sido copiado al portapapeles.",
+    });
+  };
+
+  const handleSendEmail = () => {
+    if (!emailTo) {
+      toast({
+        title: "Error",
+        description: "Por favor ingresa un correo electrónico válido.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const shareableLink = `${window.location.origin}/acceso-evaluacion?codigo=${codigoSeleccionado}`;
+    const subject = encodeURIComponent("Invitación para realizar evaluación PDA");
+    const body = encodeURIComponent(
+      `Hola,\n\nHas sido invitado a realizar una evaluación PDA. Por favor accede al siguiente enlace:\n\n${shareableLink}\n\nCódigo de acceso: ${codigoSeleccionado}\n\nGracias.`
+    );
+    
+    window.open(`mailto:${emailTo}?subject=${subject}&body=${body}`);
+    
+    toast({
+      title: "Correo preparado",
+      description: "Se ha abierto tu cliente de correo con el mensaje preparado.",
+    });
+  };
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-8">Panel de Validación PDA</h1>
@@ -323,16 +372,17 @@ export default function AdminValidacion() {
                 <TableHead>Estado</TableHead>
                 <TableHead>Fecha creación</TableHead>
                 <TableHead>Fecha evaluación</TableHead>
+                <TableHead>Acciones</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-4">Cargando datos...</TableCell>
+                  <TableCell colSpan={7} className="text-center py-4">Cargando datos...</TableCell>
                 </TableRow>
               ) : usuarios.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-4">No hay usuarios de validación</TableCell>
+                  <TableCell colSpan={7} className="text-center py-4">No hay usuarios de validación</TableCell>
                 </TableRow>
               ) : (
                 usuarios.map(usuario => (
@@ -347,6 +397,20 @@ export default function AdminValidacion() {
                     </TableCell>
                     <TableCell>{formatearFecha(usuario.fecha_creacion)}</TableCell>
                     <TableCell>{formatearFecha(usuario.fecha_evaluacion)}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setCodigoSeleccionado(usuario.codigo_acceso);
+                          setIsShareDialogOpen(true);
+                        }}
+                        className="flex items-center gap-1"
+                      >
+                        <Share className="h-4 w-4" />
+                        <span>Compartir</span>
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))
               )}
@@ -354,6 +418,75 @@ export default function AdminValidacion() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Modal de compartir */}
+      <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Compartir enlace de evaluación</DialogTitle>
+            <DialogDescription>
+              Comparte este enlace con el participante para que pueda acceder a la evaluación.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex items-center space-x-2 mt-4">
+            <div className="grid flex-1 gap-2">
+              <Label htmlFor="link">Enlace</Label>
+              <Input
+                id="link"
+                readOnly
+                value={`${window.location.origin}/acceso-evaluacion?codigo=${codigoSeleccionado}`}
+              />
+            </div>
+            <Button size="sm" className="px-3" onClick={copyToClipboard}>
+              <span className="sr-only">Copiar</span>
+              <Copy className="h-4 w-4" />
+            </Button>
+          </div>
+          
+          <div className="mt-6">
+            <Tabs defaultValue="qr">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="qr">Código QR</TabsTrigger>
+                <TabsTrigger value="email">Correo</TabsTrigger>
+              </TabsList>
+              <TabsContent value="qr" className="flex justify-center py-4">
+                {/* QR Code Component */}
+                <div className="p-4 bg-white border rounded-md">
+                  <QRCode 
+                    value={`${window.location.origin}/acceso-evaluacion?codigo=${codigoSeleccionado}`} 
+                    size={200}
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value="email">
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Correo electrónico</Label>
+                    <Input
+                      id="email"
+                      placeholder="usuario@ejemplo.com"
+                      value={emailTo}
+                      onChange={(e) => setEmailTo(e.target.value)}
+                    />
+                  </div>
+                  <Button onClick={handleSendEmail} className="w-full">
+                    Enviar por correo
+                  </Button>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+          
+          <DialogFooter className="sm:justify-start mt-4">
+            <DialogClose asChild>
+              <Button type="button" variant="secondary">
+                Cerrar
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

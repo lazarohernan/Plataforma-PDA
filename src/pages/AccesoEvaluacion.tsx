@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,19 @@ export default function AccesoEvaluacion() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  
+  // Obtener código de acceso de la URL si existe
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const codigo = params.get('codigo');
+    if (codigo) {
+      setCodigoAcceso(codigo);
+      toast({
+        title: "Código detectado",
+        description: "Se ha detectado un código de acceso en la URL.",
+      });
+    }
+  }, [toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
