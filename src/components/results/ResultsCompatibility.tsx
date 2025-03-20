@@ -1,14 +1,48 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Briefcase, Users, Bot, Star } from "lucide-react";
+import { ResultsCompatibilitySkeleton } from "./ResultsSkeletons";
+import { ProfileData } from "@/components/molecules/PDACategoryChart";
 
-export const ResultsCompatibility = () => {
-  // Mock data for role compatibility
-  const compatibleRoles = [
-    { role: "Líder de Equipo", match: 85, icon: <Users className="h-5 w-5 text-blue-600" /> },
-    { role: "Analista Estratégico", match: 78, icon: <Briefcase className="h-5 w-5 text-blue-600" /> },
-    { role: "Gestor de Proyectos", match: 72, icon: <Bot className="h-5 w-5 text-blue-600" /> }
-  ];
+interface ResultsCompatibilityProps {
+  naturalProfile: ProfileData;
+  adaptedProfile: ProfileData;
+  isLoading?: boolean;
+}
+
+export const ResultsCompatibility = ({ 
+  naturalProfile, 
+  adaptedProfile, 
+  isLoading = false 
+}: ResultsCompatibilityProps) => {
+  if (isLoading) {
+    return <ResultsCompatibilitySkeleton />;
+  }
+  
+  // Calcular compatibilidad de roles basado en el perfil real
+  const calcularCompatibilidad = () => {
+    // Calcular puntuaciones de compatibilidad basadas en el perfil real
+    // Estos cálculos son simplificados y deberían ser reemplazados por algoritmos reales
+    const liderazgoScore = Math.round((naturalProfile.risk * 0.4 + 
+                                      naturalProfile.extroversion * 0.3 + 
+                                      naturalProfile.selfControl * 0.3));
+    
+    const analistaScore = Math.round((naturalProfile.normativity * 0.5 + 
+                                     naturalProfile.patience * 0.3 + 
+                                     naturalProfile.selfControl * 0.2));
+    
+    const gestorScore = Math.round((naturalProfile.patience * 0.4 + 
+                                   naturalProfile.normativity * 0.4 + 
+                                   naturalProfile.extroversion * 0.2));
+    
+    return [
+      { role: "Líder de Equipo", match: liderazgoScore, icon: <Users className="h-5 w-5 text-blue-600" /> },
+      { role: "Analista Estratégico", match: analistaScore, icon: <Briefcase className="h-5 w-5 text-blue-600" /> },
+      { role: "Gestor de Proyectos", match: gestorScore, icon: <Bot className="h-5 w-5 text-blue-600" /> }
+    ].sort((a, b) => b.match - a.match); // Ordenar por compatibilidad descendente
+  };
+  
+  const compatibleRoles = calcularCompatibilidad();
 
   return (
     <div className="space-y-6">

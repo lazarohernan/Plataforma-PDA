@@ -2,6 +2,7 @@
 import { PDACategoryChart } from "@/components/molecules/PDACategoryChart";
 import { DerivedIndicators } from "@/components/molecules/DerivedIndicators";
 import { ProfileInterpretation } from "@/components/molecules/ProfileInterpretation";
+import { ResultsSummarySkeleton } from "./ResultsSkeletons";
 
 interface ResultsSummaryProps {
   naturalProfile: {
@@ -24,13 +25,19 @@ interface ResultsSummaryProps {
     decisionMaking: number; 
     changeRhythm: number;
   };
+  isLoading?: boolean;
 }
 
 export const ResultsSummary = ({ 
   naturalProfile, 
   adaptedProfile, 
-  derivedIndicators 
+  derivedIndicators,
+  isLoading = false
 }: ResultsSummaryProps) => {
+  
+  if (isLoading) {
+    return <ResultsSummarySkeleton />;
+  }
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">

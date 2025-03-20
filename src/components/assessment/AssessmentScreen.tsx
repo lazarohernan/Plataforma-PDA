@@ -2,8 +2,12 @@
 import { InstructionPanel } from "@/components/atoms/InstructionPanel";
 import { AssessmentLayout } from "@/components/organisms/AssessmentLayout";
 import { DescriptorGroup } from "@/components/molecules/DescriptorGroup";
-import { MAX_SELECTIONS_PER_GROUP, RECOMMENDED_TOTAL_SELECTIONS, ProfileType } from "@/data/assessmentDescriptors";
-import { Descriptor } from "@/data/assessmentDescriptors";
+import { 
+  MAX_SELECTIONS_PER_GROUP, 
+  RECOMMENDED_TOTAL_SELECTIONS, 
+  ProfileType,
+  Descriptor
+} from "@/data/assessmentDescriptors";
 
 interface AssessmentScreenProps {
   profileType: ProfileType;
@@ -32,12 +36,31 @@ export const AssessmentScreen = ({
   canGoBack,
   totalSelected,
 }: AssessmentScreenProps) => {
+  // Títulos y subtítulos más amigables según el grupo actual
+  const getTitles = () => {
+    if (profileType === "natural") {
+      const titles = [
+        { title: "¿Cómo te ves a ti mismo?", subtitle: "Selecciona las palabras que mejor te describen" },
+        { title: "Sobre tu personalidad", subtitle: "Elige las palabras que reflejan cómo eres realmente" },
+        { title: "Tus características", subtitle: "Marca las palabras con las que más te identificas" }
+      ];
+      return titles[Math.min(currentStep - 1, titles.length - 1)];
+    } else {
+      const titles = [
+        { title: "¿Cómo crees que te ven los demás?", subtitle: "Selecciona palabras que otros usarían para describirte" },
+        { title: "En tu entorno laboral", subtitle: "¿Qué dirían tus compañeros o jefes sobre ti?" },
+        { title: "Tu imagen externa", subtitle: "¿Cómo te perciben las personas que te conocen?" }
+      ];
+      return titles[Math.min(currentStep - sections[0].steps - 1, titles.length - 1)];
+    }
+  };
+  
+  const { title, subtitle } = getTitles();
+  
   return (
     <AssessmentLayout
-      title={profileType === "natural" ? "Perfil Natural" : "Perfil Adaptado"}
-      subtitle={profileType === "natural" 
-        ? "Seleccione los descriptores que mejor le describen a USTED" 
-        : "Seleccione los descriptores que cree que OTROS utilizarían para describirle"}
+      title={title}
+      subtitle={subtitle}
       currentStep={currentStep}
       totalSteps={totalSteps}
       sections={sections}
@@ -48,13 +71,11 @@ export const AssessmentScreen = ({
     >
       <div className="space-y-6">
         <InstructionPanel
-          title={profileType === "natural" 
-            ? "Seleccione los descriptores que MEJOR LE REPRESENTAN" 
-            : "Seleccione los descriptores que OTROS USARÍAN para describirle"}
+          title="Instrucciones"
           instructions={[
-            `Recomendamos seleccionar hasta ${MAX_SELECTIONS_PER_GROUP} descriptores por grupo.`,
-            `En total, se recomienda seleccionar aproximadamente ${RECOMMENDED_TOTAL_SELECTIONS} descriptores.`,
-            "No hay respuestas correctas o incorrectas, seleccione los que mejor representen su comportamiento habitual."
+            "Selecciona todas las palabras que consideres apropiadas.",
+            "No pienses demasiado, confía en tu primera impresión.",
+            "No hay respuestas correctas o incorrectas, solo tus preferencias personales."
           ]}
           className="mb-6"
         />
@@ -63,12 +84,14 @@ export const AssessmentScreen = ({
           descriptors={currentDescriptors}
           selectedDescriptors={selectedDescriptors}
           onDescriptorToggle={onDescriptorToggle}
-          maxSelections={MAX_SELECTIONS_PER_GROUP}
+          maxSelections={Infinity} // Eliminamos la restricción de selecciones por grupo
         />
         
-        <div className="mt-6 text-sm text-gray-500">
-          <p>
-            Total seleccionado: {totalSelected} de {RECOMMENDED_TOTAL_SELECTIONS} recomendados
+        <div className="mt-6">
+          <p className="text-sm text-gray-500">
+            Has seleccionado {totalSelected} {totalSelected === 1 ? "palabra" : "palabras"}
+            {totalSelected > 0 && totalSelected < 5 ? " - Selecciona algunas más para obtener mejores resultados" : ""}
+            {totalSelected >= RECOMMENDED_TOTAL_SELECTIONS ? " - ¡Excelente selección!" : ""}
           </p>
         </div>
       </div>

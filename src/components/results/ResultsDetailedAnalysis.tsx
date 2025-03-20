@@ -7,11 +7,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
-import { mockResults } from "@/models/results";
+import { ResultsDetailedAnalysisSkeleton } from "./ResultsSkeletons";
 
-export const ResultsDetailedAnalysis = () => {
-  const naturalProfile = mockResults.natural;
-  const adaptedProfile = mockResults.adapted;
+interface ResultsDetailedAnalysisProps {
+  naturalProfile: ProfileData;
+  adaptedProfile: ProfileData;
+  isLoading?: boolean;
+}
+
+export const ResultsDetailedAnalysis = ({ 
+  naturalProfile, 
+  adaptedProfile, 
+  isLoading = false 
+}: ResultsDetailedAnalysisProps) => {
+  if (isLoading) {
+    return <ResultsDetailedAnalysisSkeleton />;
+  }
   
   // Dimension info with colors and labels
   const dimensions = [

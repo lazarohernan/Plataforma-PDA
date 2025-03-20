@@ -38,8 +38,9 @@ export const DerivedIndicators = ({ indicators }: DerivedIndicatorsProps) => {
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-gray-400 cursor-help" />
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[250px]">
-                  <p>El nivel de energía indica tu disposición y capacidad para manejar distintas actividades.</p>
+                <TooltipContent className="max-w-[300px] p-4 bg-white shadow-lg rounded-md border border-gray-200">
+                  <h4 className="font-semibold text-blue-600 mb-1">Nivel de Energía</h4>
+                  <p className="text-gray-700">Indica tu disposición y capacidad para manejar distintas actividades simultáneamente. Un nivel alto sugiere dinamismo y capacidad para gestionar múltiples tareas, mientras que un nivel bajo indica preferencia por enfocarse en pocas actividades con mayor profundidad.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -48,12 +49,39 @@ export const DerivedIndicators = ({ indicators }: DerivedIndicatorsProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* Horizontal meter */}
-            <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+            {/* Horizontal meter - Improved version */}
+            <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden relative">
+              {/* Fondo con gradiente */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-200 via-blue-400 to-blue-600 opacity-20 rounded-full" />
+              
+              {/* Marcas de referencia */}
+              <div className="absolute inset-0 flex justify-between items-center px-2">
+                <div className="h-2 w-0.5 bg-gray-300"></div>
+                <div className="h-2 w-0.5 bg-gray-300"></div>
+                <div className="h-2 w-0.5 bg-gray-300"></div>
+                <div className="h-2 w-0.5 bg-gray-300"></div>
+                <div className="h-2 w-0.5 bg-gray-300"></div>
+              </div>
+              
+              {/* Barra de progreso con gradiente */}
               <div 
-                className="h-full bg-blue-600 rounded-full transition-all duration-1000 ease-out"
-                style={{ width: percentageValue(indicators.energyLevel) }}
-              />
+                className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+                style={{ 
+                  width: percentageValue(indicators.energyLevel),
+                  background: `linear-gradient(90deg, 
+                    ${indicators.energyLevel < 30 ? '#60A5FA' : '#3B82F6'} 0%, 
+                    ${indicators.energyLevel < 60 ? '#2563EB' : '#1D4ED8'} 50%, 
+                    ${indicators.energyLevel < 80 ? '#1E40AF' : '#1E3A8A'} 100%)`
+                }}
+              >
+                {/* Efecto de brillo */}
+                <div className="absolute top-0 h-1/2 w-full bg-white opacity-20"></div>
+              </div>
+              
+              {/* Valor numérico */}
+              <div className="absolute top-0 right-2 text-xs font-medium mt-0.5 text-gray-600">
+                {indicators.energyLevel}/100
+              </div>
             </div>
             <div className="flex justify-between mt-1">
               <span className="text-xs">Bajo</span>
@@ -74,8 +102,9 @@ export const DerivedIndicators = ({ indicators }: DerivedIndicatorsProps) => {
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-gray-400 cursor-help" />
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[250px]">
-                  <p>Muestra qué tan balanceada está tu energía entre diferentes ámbitos de acción.</p>
+                <TooltipContent className="max-w-[300px] p-4 bg-white shadow-lg rounded-md border border-gray-200">
+                  <h4 className="font-semibold text-blue-600 mb-1">Equilibrio de Energía</h4>
+                  <p className="text-gray-700">Refleja la distribución de tu energía entre diferentes áreas de tu vida. Un valor alto indica una distribución equilibrada entre trabajo, relaciones personales y desarrollo individual. Un valor bajo sugiere concentración de energía en áreas específicas, lo que puede generar desequilibrios.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -84,30 +113,46 @@ export const DerivedIndicators = ({ indicators }: DerivedIndicatorsProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* Balance visualization */}
-            <div className="relative h-8 w-full bg-gray-100 rounded">
+            {/* Balance visualization - Enhanced version */}
+            <div className="relative h-12 w-full bg-gray-100 rounded-lg shadow-inner">
+              {/* Gradiente de fondo mejorado */}
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-yellow-400 to-green-500 opacity-25 rounded-lg"></div>
+              
+              {/* Línea central */}
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-300 transform -translate-y-1/2"></div>
+              
+              {/* Marcadores de balance */}
+              <div className="absolute top-0 bottom-0 left-1/4 w-0.5 bg-gray-300"></div>
+              <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-gray-300"></div>
+              <div className="absolute top-0 bottom-0 left-3/4 w-0.5 bg-gray-300"></div>
+              
+              {/* Indicador principal */}
               <div 
-                className="absolute top-0 bottom-0 left-1/2 w-1 bg-gray-300 transform -translate-x-1/2"
-              />
+                className="absolute top-1/2 transform -translate-y-1/2 transition-all duration-1000"
+                style={{ left: percentageValue(indicators.energyBalance) }}
+              >
+                <div className="h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg flex items-center justify-center">
+                  <div className="h-2 w-2 rounded-full bg-white"></div>
+                </div>
+              </div>
+              
+              {/* Etiqueta dinámica */}
               <div 
-                className="absolute top-0 bottom-0 bg-blue-500 opacity-50 rounded transition-all duration-1000"
-                style={{ 
-                  left: indicators.energyBalance < 50 ? percentageValue(indicators.energyBalance) : '50%',
-                  width: indicators.energyBalance < 50 
-                    ? percentageValue(50 - indicators.energyBalance) 
-                    : percentageValue(indicators.energyBalance - 50)
-                }}
-              />
-              <div 
-                className="absolute top-1/2 h-4 w-4 bg-blue-600 rounded-full transform -translate-y-1/2 transition-all duration-1000 z-10"
-                style={{ 
-                  left: percentageValue(indicators.energyBalance) 
-                }}
-              />
+                className={`absolute bottom-0 transform -translate-x-1/2 text-xs font-medium px-2 py-0.5 rounded-t-md transition-all duration-500 ${
+                  indicators.energyBalance < 40 ? 'bg-red-500 text-white' : 
+                  indicators.energyBalance < 70 ? 'bg-yellow-400 text-gray-800' : 
+                  'bg-green-500 text-white'
+                }`}
+                style={{ left: percentageValue(indicators.energyBalance) }}
+              >
+                {indicators.energyBalance < 40 ? 'Desbalanceado' : 
+                 indicators.energyBalance < 70 ? 'Moderado' : 
+                 'Balanceado'}
+              </div>
             </div>
             <div className="flex justify-between mt-2">
-              <span className="text-xs">Desbalanceado</span>
-              <span className="text-xs">Balanceado</span>
+              <span className="text-xs text-red-500">Desbalanceado</span>
+              <span className="text-xs text-green-500">Balanceado</span>
             </div>
           </CardContent>
         </Card>
@@ -124,8 +169,9 @@ export const DerivedIndicators = ({ indicators }: DerivedIndicatorsProps) => {
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-gray-400 cursor-help" />
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[250px]">
-                  <p>Indica tu estilo predominante al momento de tomar decisiones.</p>
+                <TooltipContent className="max-w-[300px] p-4 bg-white shadow-lg rounded-md border border-gray-200">
+                  <h4 className="font-semibold text-blue-600 mb-1">Toma de Decisiones</h4>
+                  <p className="text-gray-700">Revela tu estilo predominante al enfrentar decisiones. Un valor alto indica un enfoque más racional y analítico, basado en datos y lógica. Un valor bajo sugiere un estilo más intuitivo y emocional, donde las sensaciones y percepciones juegan un papel importante en tus decisiones.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -160,8 +206,9 @@ export const DerivedIndicators = ({ indicators }: DerivedIndicatorsProps) => {
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-gray-400 cursor-help" />
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[250px]">
-                  <p>Refleja tu velocidad y disposición para adaptarte a nuevos entornos y situaciones.</p>
+                <TooltipContent className="max-w-[300px] p-4 bg-white shadow-lg rounded-md border border-gray-200">
+                  <h4 className="font-semibold text-blue-600 mb-1">Ritmo de Cambio</h4>
+                  <p className="text-gray-700">Mide tu velocidad y disposición para adaptarte a nuevos entornos y situaciones. Un valor alto indica una persona dinámica que se adapta rápidamente a los cambios y busca nuevas experiencias. Un valor bajo sugiere una preferencia por la estabilidad, rutinas establecidas y un enfoque más cauteloso ante los cambios.</p>
                 </TooltipContent>
               </Tooltip>
             </div>

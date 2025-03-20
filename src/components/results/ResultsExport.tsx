@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import { mockResults } from "@/models/results";
 import { GeneratePDF } from "@/components/pdf/GeneratePDF";
 import { Mail, ArrowRightCircle, FileText, Download, Table } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -16,12 +15,29 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
+import { ResultsExportSkeleton } from "./ResultsSkeletons";
+import { ProfileData } from "@/components/molecules/PDACategoryChart";
 
 interface ResultsExportProps {
+  naturalProfile: ProfileData;
+  adaptedProfile: ProfileData;
+  derivedIndicators: {
+    energyLevel: number;
+    energyBalance: number;
+    decisionMaking: number;
+    changeRhythm: number;
+  };
   onExportPDF?: () => void;
+  isLoading?: boolean;
 }
 
-export const ResultsExport = ({ onExportPDF }: ResultsExportProps) => {
+export const ResultsExport = ({ 
+  naturalProfile, 
+  adaptedProfile, 
+  derivedIndicators,
+  onExportPDF, 
+  isLoading = false 
+}: ResultsExportProps) => {
   const [selectedSections, setSelectedSections] = useState({
     naturalProfile: true,
     adaptedProfile: true,
@@ -31,6 +47,10 @@ export const ResultsExport = ({ onExportPDF }: ResultsExportProps) => {
   });
   
   const [reportFormat, setReportFormat] = useState("pdf");
+  
+  if (isLoading) {
+    return <ResultsExportSkeleton />;
+  }
   
   const handleSectionToggle = (section: string) => {
     setSelectedSections(prev => ({
@@ -106,9 +126,9 @@ export const ResultsExport = ({ onExportPDF }: ResultsExportProps) => {
             </div>
             
             <GeneratePDF 
-              naturalProfile={mockResults.natural}
-              adaptedProfile={mockResults.adapted}
-              derivedIndicators={mockResults.derivedIndicators}
+              naturalProfile={naturalProfile}
+              adaptedProfile={adaptedProfile}
+              derivedIndicators={derivedIndicators}
               selectedSections={selectedSections}
               className="w-full"
             />

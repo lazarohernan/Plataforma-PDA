@@ -2,12 +2,14 @@
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { useState } from "react";
+import { Eje } from "@/algoritmo/types";
 
 interface DescriptorChipProps {
   label: string;
   selected?: boolean;
   onSelect: () => void;
   className?: string;
+  eje?: Eje;
 }
 
 export const DescriptorChip = ({
@@ -15,6 +17,7 @@ export const DescriptorChip = ({
   selected = false,
   onSelect,
   className,
+  eje, // Mantenemos el parámetro pero no lo usamos visualmente
 }: DescriptorChipProps) => {
   const [isHovered, setIsHovered] = useState(false);
 

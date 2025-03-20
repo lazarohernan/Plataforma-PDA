@@ -1,69 +1,69 @@
-# Welcome to your Lovable project
+# Plataforma PDA (Personal Development Assessment)
 
-## Project info
+Plataforma de evaluación psicométrica basada en el modelo PDA (Personal Development Assessment) para la identificación de perfiles conductuales y competencias profesionales.
 
-**URL**: https://lovable.dev/projects/484054a5-0582-49a6-abfe-dd8578f2709d
+## Características
 
-## How can I edit this code?
+- Evaluación interactiva con selección de descriptores
+- Algoritmo de procesamiento y normalización de resultados
+- Perfiles Natural y Adaptado
+- Indicadores derivados y análisis de compatibilidad
+- Panel de administración para gestión de evaluaciones
+- Generación de reportes detallados
+- Integración con Supabase para almacenamiento y autenticación
 
-There are several ways of editing your application.
+## Tecnologías
 
-**Use Lovable**
+- React + TypeScript
+- Vite como bundler
+- Tailwind CSS + shadcn/ui para la interfaz
+- Supabase para base de datos y autenticación
+- Gráficos interactivos con Chart.js
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/484054a5-0582-49a6-abfe-dd8578f2709d) and start prompting.
+## Instalación
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Clona este repositorio
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Copia el archivo `.env.example` a `.env` y configura las variables de entorno:
+   ```bash
+   cp .env.example .env
+   ```
+4. Configura tu proyecto Supabase y actualiza las variables de entorno con tus credenciales
+5. Ejecuta el script de configuración de la base de datos:
+   ```bash
+   node scripts/setup-database.js
+   ```
+6. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
 
-**Use your preferred IDE**
+## Estructura del Proyecto
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- `/src`: Código fuente de la aplicación
+  - `/algoritmo`: Implementación del algoritmo PDA
+  - `/components`: Componentes React reutilizables
+  - `/data`: Datos estáticos como descriptores
+  - `/hooks`: Custom hooks de React
+  - `/lib`: Utilidades y configuraciones
+  - `/pages`: Páginas principales de la aplicación
+  - `/types`: Definiciones de tipos TypeScript
+- `/migrations`: Scripts SQL para la base de datos
+- `/public`: Archivos estáticos
+- `/scripts`: Scripts de utilidad para configuración
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Flujo de Evaluación
 
-Follow these steps:
+1. El administrador genera códigos de acceso desde el panel de administración
+2. El usuario accede a la evaluación con su código
+3. Completa la evaluación seleccionando descriptores para su perfil Natural y Adaptado
+4. El sistema procesa los resultados y genera el perfil
+5. Se muestran los resultados con análisis detallado
+6. El usuario puede proporcionar feedback sobre la precisión de los resultados
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Licencia
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/484054a5-0582-49a6-abfe-dd8578f2709d) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+Este proyecto está bajo licencia privada. Todos los derechos reservados.

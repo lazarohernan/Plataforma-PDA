@@ -13,9 +13,9 @@ export const Header = ({ minimal = false }: HeaderProps) => {
   return (
     <header className="w-full py-4 px-4 md:px-8 backdrop-blur-sm bg-white/80 shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center">
+        <div className="flex items-center">
           <Logo />
-        </Link>
+        </div>
         
         {!minimal && (
           <div className="flex justify-between items-center w-full md:w-auto">
